@@ -9,7 +9,7 @@ import Detail from "~/pages/Detail";
 import Room from "~/pages/Room";
 
 import routesConfig from "~/config/routes";
-import { HeaderOnly } from "~/components/Layout";
+import { FooterRemove } from "~/components/Layout";
 
 const publicRoutes = [
   { path: routesConfig.home, components: Home },
@@ -20,9 +20,7 @@ const publicRoutes = [
   { path: routesConfig.movie, components: Movie },
   { path: routesConfig.detail, components: Detail },
   { path: routesConfig.profile, components: Sign },
-  { path: routesConfig.room, components: Room },
-  // { path: routesConfig.profile, components: Sign, layout: HeaderOnly },
-  // { path: routesConfig.result, components: Result, layout: null },
+  { path: routesConfig.room, components: Room, layout: FooterRemove },
 ];
 
 const privateRoutes = [];
