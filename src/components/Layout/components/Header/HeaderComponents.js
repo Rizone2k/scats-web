@@ -3,7 +3,7 @@ import React from "react";
 // import { Req } from "~/data/DATA";
 import { useEffect, useState } from "react";
 
-import { Wrapper as PopperWrapper } from "~/components/Popper";
+// import { Wrapper as PopperWrapper } from "~/components/Popper";
 // import Items from "~/components/Items";
 import "./Header.mudule.scss";
 
@@ -39,25 +39,24 @@ const Search = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
       {/* <Req></Req> */}
-      <PopperWrapper>
-        <div
-          style={{ zIndex: "3" }}
-          className={`result ${
-            Search !== "" ? "d-block position-absolute zindex-9" : "d-none"
-          }`}
-        >
-          <ul className="list bgResult" id="bgResult">
-            {Query(data).map((item, key) => (
-              <li className="listItems d-flex align-self-center row" key={key}>
-                <img className="preSent col-2" src={item.thumb} alt="avatar" />{" "}
-                <br />
-                <span className="col-10">{item.name}</span> <br />
-              </li>
-            ))}
-            {/* <Items /> */}
-          </ul>
-        </div>
-      </PopperWrapper>
+
+      <div
+        style={{ zIndex: "3" }}
+        className={`result ${
+          Search !== "" ? "d-block position-absolute zindex-9" : "d-none"
+        }`}
+      >
+        <ul className="list bgResult" id="bgResult">
+          {Query(data).map((item, key) => (
+            <li className="listItems d-flex align-self-center row" key={key}>
+              <img className="preSent col-2" src={item.thumb} alt="avatar" />{" "}
+              <br />
+              <span className="col-10">{item.name}</span> <br />
+            </li>
+          ))}
+          {/* <Items /> */}
+        </ul>
+      </div>
     </div>
   );
 };
