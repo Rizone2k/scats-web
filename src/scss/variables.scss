@@ -1,0 +1,37 @@
+// Text, icons, hover states
+$video-react-primary-foreground-color: #fff !default;
+
+// Control backgrounds (control bar, big play, menus)
+$video-react-primary-background-color: #2b333f !default;
+$video-react-primary-background-transparency: 0.7 !default;
+
+// Hover states, slider backgrounds
+$video-react-secondary-background-color: lighten(
+  $video-react-primary-background-color,
+  33%
+) !default;
+$video-react-secondary-background-transparency: 0.5 !default;
+
+$video-react-text-font-family: serif, Times, "Times New Roman" !default;
+
+$video-react-big-play-button-width: 3em !default;
+$video-react-big-play-button-height: 1.5em !default;
+$video-react-big-play-button-transparency: 0.8 !default;
+
+$body-bg: #0f0f0f;
+$main-color: #ff0000;
+$txt-color: #fff;
+
+$white: #fff;
+$black: #000;
+
+$box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+$header-height: 8rem;
+$header-shrink-height: 5rem;
+$border-radius: 20px;
+
+$mobile-width: 600px;
+$tablet-width: 1024px;
+
+$font-family: "Montserrat", sans-serif;

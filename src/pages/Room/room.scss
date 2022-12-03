@@ -1,0 +1,56 @@
+.playlist-title {
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.warp-view ul,
+li {
+  list-style: none !important;
+}
+
+.tab-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 40rem;
+}
+
+.tab-content::-webkit-scrollbar {
+  width: 5px;
+  padding: 2px;
+}
+
+/* Track */
+.tab-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.tab-content::-webkit-scrollbar-thumb {
+  background: rgb(128, 127, 127);
+}
+
+/* Handle on hover */
+.tab-content::-webkit-scrollbar-thumb:hover {
+  background: rgb(43, 41, 41);
+}
+
+.btn-send {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.content-chat {
+  height: 35rem;
+}
+.wrap-playlist img,
+.chat-other-user img,
+.chat-current-user img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100rem;
+}

@@ -1,0 +1,12 @@
+@use "../../../../scss/variables.scss" as *;
+
+input {
+  border: 0;
+  //   background-color: $black;
+  padding: 1rem 4rem;
+  font-size: 1.5rem;
+  border-radius: $border-radius;
+  //   color: $txt-color;
+  color: rgb(173, 128, 3);
+  font-family: $font-family;
+}

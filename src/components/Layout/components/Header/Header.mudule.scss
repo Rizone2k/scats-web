@@ -1,0 +1,115 @@
+// .drd {
+//   left: -100px !important;
+// }
+
+.flex {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.cycle {
+  position: absolute;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 100rem;
+  background-color: red;
+  color: red;
+}
+
+.bg-navbar {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.listItems {
+  color: rgb(127, 161, 224);
+  padding: 5px;
+  span,
+  img {
+    align-self: center;
+  }
+}
+
+.search {
+  padding: 5px 45px 5px 45px;
+  border-radius: 25px;
+  background-color: rgb(46, 40, 40);
+  box-shadow: 4px 2px 1px 0px rgb(221, 153, 6);
+  color: rgb(206, 152, 6);
+}
+
+.search:hover,
+:focus,
+:focus-visible {
+  /* background-color: rgb(12, 26, 26); */
+  outline-color: rgb(117, 20, 20);
+  outline: rgb(117, 20, 20);
+}
+
+.logo {
+  font-size: 3rem;
+  color: var(--color-logo);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result {
+  width: 260px;
+}
+
+.preSent {
+  height: 40px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+#bgResult {
+  z-index: 99;
+  background-color: var(--bgLightBlue);
+  border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 40rem;
+  /* width */
+}
+#bgResult::-webkit-scrollbar {
+  width: 5px;
+  padding: 2px;
+}
+
+/* Track */
+#bgResult::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+#bgResult::-webkit-scrollbar-thumb {
+  background: rgb(211, 210, 210);
+}
+
+/* Handle on hover */
+#bgResult::-webkit-scrollbar-thumb:hover {
+  background: rgb(139, 139, 139);
+}
+
+.bgResult:before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(-45deg, #103783 0%, #a7a8a8 100%);
+  transform: translate3d(0px, 20px, 0) scale(0.95);
+  filter: blur(20px);
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+
+.clock-w {
+  width: 11rem;
+}

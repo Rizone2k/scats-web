@@ -1,0 +1,55 @@
+@import "normalize-css";
+// @import url("https://fonts.googleapis.com/css2?family=Livvic:wght@200;300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,700;1,200&display=swap");
+
+ul li a {
+  text-decoration: none;
+}
+// a:hover {
+//   color: currentColor !important;
+// }
+a:-webkit-any-link a:hover {
+  color: currentColor !important;
+  text-decoration: none;
+}
+a:focus {
+  outline: none !important;
+}
+:root {
+  --bgLightBlue: aliceblue;
+  --color-logo: #ffc107;
+}
+#root {
+  background-color: #0f0f0f;
+  // background-image: url("../../assets/img/body-bg.png");
+  background-position: center;
+  background-size: cover;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  color: #fff;
+}
+ul,
+li {
+  list-style: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+a {
+  cursor: pointer;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}

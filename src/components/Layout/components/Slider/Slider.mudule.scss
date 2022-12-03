@@ -1,0 +1,31 @@
+.mkt-3dSlider-title {
+  color: #fff;
+  font-weight: 600;
+  font-size: calc(50% + 0.5vw + 0.5vh);
+}
+
+.iiimg {
+  background-image: linear-gradient(
+      to top left,
+      rgba(9, 13, 19, 0.363),
+      rgba(247, 246, 245, 0.005)
+    ),
+    url("https://8phim.net/wp-content/uploads/2022/08/dune-poster-1-scaled.jpg");
+  background-size: cover;
+  background-position: center center;
+  height: calc(100vh - 100px);
+}
+.iimg {
+  background-image: linear-gradient(
+      to top left,
+      rgba(9, 13, 19, 0.363),
+      rgba(247, 246, 245, 0.005)
+    ),
+    url("https://8phim.net/wp-content/uploads/2022/08/thor_love_and_thunder__2022.jpg");
+  background-size: cover;
+  background-position: center center;
+  height: calc(100vh - 100px);
+}
+.swiper-pagination-progressbar-fill {
+  background: aquamarine !important;
+}
