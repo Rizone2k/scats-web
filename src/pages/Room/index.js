@@ -30,18 +30,16 @@ function Room() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [arrMovie, setArrMovie] = useState([]);
-  const [player, setPlayer] = useState({});
+  const [player, setPlayer] = useState(null);
   const [playlist, setPlaylist] = useState([]);
   const [viewers, setViewers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
-  const [position, setPosition] = useState(0);
+  const [position, setPosition] = useState(null);
   const [currentVideo, setCurrentVideo] = useState(null);
 
   const handleClose = () => setAddMovie(false);
   const handleShow = () => setAddMovie(true);
-
-  let currentPosition;
 
   const changeSearchDebouncer = useCallback(
     debounce((query) => {
@@ -76,12 +74,10 @@ function Room() {
     socket.current.emit("add-playlist", video);
   };
 
-  const addMovies = () => {};
-
-  const setCurrentPosition = (e) => {
-    // currentPosition = parseInt(e.position * 1000);
-    socket.current.emit(position, currentPosition);
-  };
+  // const setCurrentPosition = (e) => {
+  //   console.log(parseInt(e.position * 1000));
+  //   socket.current.emit('position', parseInt(e.position * 1000));
+  // };
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
@@ -108,39 +104,42 @@ function Room() {
           setArrMovie(res.data);
         }
       }
-      // console.log(res);
-      // if (res.status == 200) {
-      //   const result = res.data;
-      // }
-      // const rs = await scatsApi.getMovieLive(key);
-      // if (rs.status == "success") {
-      //     if (rs.data != null) {
-      //         setArrMovie(rs.data);
-      //     }
-      // } else {
-      //     // Alert.alert(null, rs.message);
-      // }
     } catch (error) {
-      // Alert.alert(null, "Error !!!");
     }
   };
 
-  // useEffect(() => {
-  //   const getList = async () => {
-  //     let response = null;
-  //     const params = {};
-  //     const page = 2;
-  //     response = await scatsApi.getMovieLive(key);
-  //     setItems(response.data.movies);
-  //   };
-  //   getList();
-  // }, []);
 
   useEffect(() => {
-    socket.current = io("http://api.scats.tk/");
+    if (player) {
+      player.setup({
+        file: currentVideo.hls,
+        type: "hls",
+      });
+      player.play();
+      socket.current.on("position", (position) => {
+        const currentPosition = parseInt(player.getPosition());
+        const p = parseInt(position / 1000);
+        if (Math.abs(p - currentPosition) > 2) {
+          if (player.getState() === "playing") {
+            player.seek(p);
+          }
+        }
+      });
+
+      player.on('time', (e) => {
+        socket.current.emit('position', parseInt(e.position * 1000));
+      });
+
+    }
+
+
+  }, [currentVideo, player]);
+
+
+  useEffect(() => {
+    socket.current = io('http://192.168.1.6:5550/');
     socket.current.on("user-join-room", (user) => {
       // ToastAndroid.show(`${user.username} đã vào phòng`, ToastAndroid.SHORT);
-      console.log(user);
       setViewers((viewers) => [...viewers, user]);
     });
 
@@ -155,11 +154,7 @@ function Room() {
     socket.current.on("change-video", (video) => {
       setCurrentVideo(video);
       // console.log({ ...currentVideo, ...video });
-      console.log({ video, currentVideo, player: player.player });
-      player.player.setup({
-        file: video.hls,
-        type: "hls",
-      });
+      // console.log({ video, currentVideo, player });
       // player.current.playAsync();
     });
 
@@ -182,23 +177,6 @@ function Room() {
       //   `${video.movie} tập ${video.episode} đã xóa`,
       //   ToastAndroid.SHORT
       // );
-    });
-
-    socket.current.on("position", (position) => {
-      const currentPosition = parseInt(player.player.getPosition());
-
-      const p = parseInt(position / 1000);
-      // console.log(player.player);
-      if (Math.abs(p - currentPosition) > 2) {
-        if (player.player.getState() === "playing") {
-          player.player.seek(p);
-        }
-        // setPosition(parseInt(position) + 1000);
-        // console.log(p);
-
-        // player.player.play();
-        // player.current.playAsync();
-      }
     });
 
     socket.current.on("pause", () => {
@@ -234,6 +212,7 @@ function Room() {
       socket.current.disconnect();
     };
   }, []);
+
   return (
     <>
       <div className="container-fluid px-5 row">
@@ -297,11 +276,13 @@ function Room() {
           <div className="section px-2 py-2" id="watch">
             {currentVideo && (
               <JWPlayer
-                onTime={(e) => {
-                  setCurrentPosition(e);
-                }}
+                // id={currentPosition}
+                // onTime={(e) => {
+                //   setCurrentPosition(e);
+                //   console.log(e.position)
+                // }}
                 didMountCallback={(e) => {
-                  setPlayer(e);
+                  setPlayer(e.player);
                 }}
                 file={currentVideo.hls}
                 type="hls"
@@ -310,6 +291,7 @@ function Room() {
             )}
           </div>
         </div>
+
         <div className="bg-info col-12 col-lg-4 wrap-tab">
           <Tabs
             id="controlled-tab-example"
@@ -346,11 +328,10 @@ function Room() {
                 {messages.map((e, i) => (
                   <div
                     key={i}
-                    className={`${
-                      currentUser.id == e.user.id
-                        ? "chat-current-user"
-                        : "chat-other-user "
-                    }px-2 py-1 my-1 rounded `}
+                    className={`${currentUser.id == e.user.id
+                      ? "chat-current-user"
+                      : "chat-other-user "
+                      }px-2 py-1 my-1 rounded `}
                   >
                     <img src={e.user.avatar} alt={e.user.username} />
                     <p className="bg-dark my-0 px-2">{e.message}</p>
