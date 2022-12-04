@@ -40,6 +40,10 @@ const scatsApi = {
       "&limit=20";
     return axiosMovie.get(url, params);
   },
+  getMovieLive: (key) => {
+    const url = "movie/search-live?key=" + key;
+    return axiosMovie.get(url);
+  },
   category: (category, params) => {
     const url = "/" + categoryParam[category];
     return axiosMovie.get(url, params);

@@ -16,7 +16,7 @@ function Movie() {
   console.log(items);
   const [page, setPage] = useState(1);
 
-  // Call Api render movie and search
+  // Call Api render movie
   useEffect(() => {
     const getList = async () => {
       let response = null;
