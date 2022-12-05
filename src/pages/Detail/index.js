@@ -4,6 +4,8 @@ import { UnmountClosed } from "react-collapse";
 import JWPlayer from "@jwplayer/jwplayer-react";
 
 import {
+  FaRegPaperPlane,
+  FaRegGrinTongueSquint,
   FaInfo,
   FaHeart,
   FaThumbsUp,
@@ -16,24 +18,70 @@ import Button, {
 } from "~/components/Layout/components/Button/Button";
 import scatsApi from "~/API/scatsApi";
 import "./Detail.scss";
+import { Link } from "react-router-dom";
+import { Card } from "react-bootstrap";
+import { motion } from "framer-motion";
+// import ListMovies from "../components/Movie/ListMovies";
 
 function Detail() {
-  const [open, setOpen] = useState(false);
   let { id } = useParams();
+
+  const [items, setItems] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [openReply, setOpenReply] = useState(false);
   const [item, setItem] = useState(null);
   const [video, setVideo] = useState("");
+  const [countComment, setCountComments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [idRepliesComment, setIdRepliesComment] = useState(id);
+  const [textRepliesComment, setTextIdRepliesComment] = useState("");
+  console.log(idRepliesComment);
 
+  // similar
+  useEffect(() => {
+    const getList = async () => {
+      let response = null;
+      const params = {};
+      response = await scatsApi.getMoviesList(3, { params });
+      // console.log(response.data.movies);
+      setItems(response.data.movies);
+      // window.scrollTo(0, 0);
+    };
+    getList();
+  }, []);
+
+  // Detail movie
   useEffect(() => {
     const getDetail = async () => {
       const params = {};
       const response = await scatsApi.detail(id, params);
       setItem(response.data);
       setVideo(response.data.Episodes);
-      window.scrollTo(0, 0);
-      console.log(response.data);
+      // window.scrollTo(0, 0);
+      // console.log(response.data);
     };
     getDetail();
   }, [id]);
+
+  // Comments
+  useEffect(() => {
+    const getComment = async () => {
+      try {
+        const response = await scatsApi.getComment(id);
+        setCountComments(response.data.data.count);
+        setComments(response.data.data.comments);
+        // window.scrollTo(0, 0);
+        console.log(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getComment();
+  }, []);
+
+  const handleSendCommand = () => {
+    console.log(idRepliesComment, textRepliesComment);
+  };
 
   let URL = video[video.length - 1];
 
@@ -48,7 +96,7 @@ function Detail() {
             }}
           ></div>
           <div className="mb-3 movie-content container">
-            <div className="movie-content__poster">
+            <div className="movie-content__poster me-5">
               <div
                 className="movie-content__poster__img"
                 style={{
@@ -90,16 +138,20 @@ function Detail() {
                     <small>Loại phim: {item.Type.name}</small>
                   </li>
                 </ul>
-                <span>
-                  <FaThumbsUp className="text-danger"></FaThumbsUp> {item.liked}
-                </span>
-                <span className="ps-4">
-                  <FaRegEye className="text-primary"></FaRegEye> {item.viewed}
-                </span>
-                <span className="ps-4">
-                  <FaRegStar className="text-warning"></FaRegStar>{" "}
-                  {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
-                </span>
+                <div>
+                  <span>
+                    <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>{" "}
+                    {item.liked}
+                  </span>
+                  <span className="ps-4">
+                    <FaRegEye className="text-primary mb-1"></FaRegEye>{" "}
+                    {item.viewed}
+                  </span>
+                  <span className="ps-4">
+                    <FaRegStar className="text-warning mb-2"></FaRegStar>{" "}
+                    {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
+                  </span>
+                </div>
               </div>
               <hr />
               <div className="ps-5 action-user">
@@ -151,16 +203,154 @@ function Detail() {
               <span className="text-warning"> Tập {URL.episode}</span>
             </h3>
 
-            <div className="section mb-3" id="watch">
-              <JWPlayer
-                file={URL.hls}
-                type="hls"
-                library="http://api.scats.tk/public/js/JWPlayer.js"
-              />
+            <div className="wrap-player-video row">
+              <div
+                className="col-12 col-lg-9 col-md-9 section mb-3 wrap-player-video_watch"
+                id="watch"
+              >
+                <JWPlayer
+                  file={URL.hls}
+                  type="hls"
+                  library="http://api.scats.tk/public/js/JWPlayer.js"
+                />
+              </div>
+              <div className="col-12 col-lg-3 col-md-3 wrap-player-video_cmt px-1 py-1 rounded">
+                {/*  */}
+                <h4 className="pe-3">Bình luận: {"(" + countComment + ")"}</h4>
+                <div className="bg-black px-1 py-1 rounded">
+                  <div className="wrap-player-video_content-cmt d-flex flex-column ">
+                    {comments &&
+                      comments.map((e, i) => (
+                        <div className="cmt" key={i}>
+                          <div className="chat-other-user px-2 text-break d-flex flex-row">
+                            <img src={e.User.avatar} alt="user" />
+                            &nbsp;
+                            <small>{e.User.username}</small>
+                          </div>
+                          <div className="chat-other-user rounded content-user align-items-end mx-1 px-2 text-break d-flex flex-column">
+                            <p>{e.content}</p>
+                            <div className="d-flex align-self-end flex-column">
+                              <div className="time text-end">
+                                <small>{e.created_at}</small>
+                                <br />
+                                {e.Replies.length ? (
+                                  <>
+                                    <a
+                                      className="ps-5"
+                                      onClick={() => setOpenReply(!openReply)}
+                                    >
+                                      Xem phản hồi
+                                    </a>
+                                    &nbsp; &nbsp;
+                                    <a
+                                      className="pe-5"
+                                      onClick={() => setIdRepliesComment(e.id)}
+                                    >
+                                      Bình luận
+                                    </a>
+                                  </>
+                                ) : (
+                                  <a
+                                    className="pe-5"
+                                    onClick={() => setIdRepliesComment(e.id)}
+                                  >
+                                    Bình luận
+                                  </a>
+                                )}
+                              </div>
+                              <div>
+                                <UnmountClosed isOpened={openReply}>
+                                  {e.Replies.map((e, i) => (
+                                    <React.Fragment key={i}>
+                                      <p className="bg-black">{e.content}</p>
+                                      <div className="d-flex justify-content-end">
+                                        <span>{e.created_at}</span>
+                                      </div>
+                                    </React.Fragment>
+                                  ))}
+                                </UnmountClosed>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="input-wrap position-relative flex-row justify-content-center align-items-end pt-2">
+                    <input
+                      onChange={(e) => setTextIdRepliesComment(e.target.value)}
+                      className="input-chat w-100"
+                      type="text"
+                    />
+                    <button
+                      title="Send"
+                      className="border-0 btn-send"
+                      type="button"
+                      onClick={() => handleSendCommand()}
+                    >
+                      <FaRegPaperPlane></FaRegPaperPlane>
+                    </button>
+                    <button
+                      title="Icon"
+                      className="border-0 input-wrap_icon"
+                      type="button"
+                    >
+                      <FaRegGrinTongueSquint className="text-info"></FaRegGrinTongueSquint>
+                    </button>
+                  </div>
+                </div>
+                {/*  */}
+              </div>
             </div>
             <div className="section mb-3">
               <div className="section__header mb-2">
-                <h2>Similar</h2>
+                <h3>
+                  <b>#Có thể bạn thích</b>
+                </h3>
+                <div className="list-movie container-fluid px-3 py-2">
+                  {items.slice(0, 5).map((item, i) => (
+                    <React.Fragment key={i}>
+                      {
+                        <motion.div
+                          animate={{ opacity: 1 }}
+                          initial={{ opacity: 0 }}
+                          exit={{ opacity: 0 }}
+                          Layout
+                          className="popular-movies"
+                        >
+                          <>
+                            <div className="items-movie">
+                              <Link to={"/detail/" + item.id}>
+                                <Card>
+                                  <Card.Img
+                                    variant="top"
+                                    title={item.name}
+                                    src={
+                                      item.thumb ||
+                                      "http://img.ophim1.cc/uploads/movies/phi-vu-trieu-do-phan-3-thumb.jpg"
+                                    }
+                                  />
+                                  <Card.Body className="px-2 py-3 ">
+                                    <Card.Title title={item.name}>
+                                      {item.name}
+                                    </Card.Title>
+
+                                    <Card.Text
+                                      className="overlay"
+                                      title={item.name}
+                                    >
+                                      {item.name}
+                                    </Card.Text>
+                                  </Card.Body>
+                                </Card>
+                              </Link>
+                            </div>
+                          </>
+                        </motion.div>
+                      }
+                    </React.Fragment>
+                  ))}
+                </div>
+                {/* <ListMovies></ListMovies> */}
               </div>
             </div>
           </div>

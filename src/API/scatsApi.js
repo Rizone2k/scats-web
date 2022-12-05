@@ -21,6 +21,10 @@ const scatsApi = {
     const url = "room";
     return instance.post(url, data);
   },
+  getComment: (id) => {
+    const url = "comment/" + id;
+    return instance.get(url);
+  },
   getRoomLive: () => {
     const url = "room/live";
     return instance.get(url);

@@ -1,5 +1,11 @@
 import JWPlayer from "@jwplayer/jwplayer-react";
-import { FaTrashAlt, FaRegPaperPlane } from "react-icons/fa";
+import {
+  FaTrashAlt,
+  FaRegPaperPlane,
+  FaListUl,
+  FaRocketchat,
+  FaUsers,
+} from "react-icons/fa";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
@@ -223,7 +229,7 @@ function Room() {
                 <input
                   className="border border-danger ms-5"
                   type="text"
-                  placeholder="Tìm phim..."
+                  placeholder="Tìm phim với 3 ký tự..."
                   onChange={(e) => onChangeSearch(e.target.value)}
                 />
               </div>
@@ -266,9 +272,9 @@ function Room() {
             {/* <OutlineButton className="bg-danger">Đăng xuất</OutlineButton> */}
           </Modal.Footer>
         </Modal>
-        <div className="wrap-view bg-danger col-12 col-lg-8 wrap-player">
+        <div className="wrap-view col-12 col-lg-8 wrap-player d-flex flex-column justify-content-center">
           <div className="section px-2 py-2" id="watch">
-            {currentVideo && (
+            {currentVideo ? (
               <JWPlayer
                 // id={currentPosition}
                 // onTime={(e) => {
@@ -282,6 +288,11 @@ function Room() {
                 type="hls"
                 library="http://api.scats.tk/public/js/JWPlayer.js"
               />
+            ) : (
+              <div className="d-flex flex-column text-center">
+                <div className="logo">!</div>
+                <p>Chưa có phim được phát</p>
+              </div>
             )}
           </div>
         </div>

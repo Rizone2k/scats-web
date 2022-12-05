@@ -7,6 +7,13 @@
   -webkit-box-orient: vertical;
 }
 
+.wrap-player {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/img/footer-bg.jpg");
+}
+
 .warp-view ul,
 li {
   list-style: none !important;

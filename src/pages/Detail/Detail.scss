@@ -32,7 +32,7 @@
 
 .movie-content {
   @include myFlex(flex-start, flex-start);
-  max-width: 1260px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   margin-top: -260px;
@@ -61,7 +61,7 @@
     position: relative;
 
     a:hover {
-      color: currentColor !important;
+      color: rgb(197, 153, 7) !important;
     }
 
     // @include mobile {
@@ -104,6 +104,43 @@
   color: $white;
   border-color: transparent;
 }
+.wrap-player-video {
+  // &_watch {
+  //   width: 70%;
+  // }
+  &_cmt {
+    background-color: rgba(32, 32, 32, 0.925);
+    height: fit-content;
+  }
+  &_content-cmt {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(100vh - 300px);
+    &::-webkit-scrollbar {
+      width: 5px;
+      padding: 2px;
+    }
+    & a:hover {
+      color: rgb(197, 153, 7) !important;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgb(211, 210, 210);
+    }
+  }
+}
+
+.content-user {
+  background-color: rgb(57, 61, 61);
+  color: bisque;
+  p {
+    margin: 3px;
+    padding: 0.7rem 0.7rem;
+    background-color: rgb(139, 106, 68);
+    border-radius: 10px 5px 10px 5px;
+  }
+}
 
 .casts {
   display: grid;
@@ -128,6 +165,14 @@
 
   &__title {
     margin-bottom: 1.5rem;
+  }
+}
+
+.input-wrap {
+  &_icon {
+    position: absolute;
+    left: 20px;
+    bottom: 12px;
   }
 }
 // .scat ul,

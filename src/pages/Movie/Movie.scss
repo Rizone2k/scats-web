@@ -55,20 +55,20 @@
   padding: 2px;
 }
 
-/* Track */
-.dropdown-menu::-webkit-scrollbar-track {
-  // background: #f1f1f1;
-}
+// /* Track */
+// .dropdown-menu::-webkit-scrollbar-track {
+//   // background: #f1f1f1;
+// }
 
 /* Handle */
 .dropdown-menu::-webkit-scrollbar-thumb {
   background: rgb(211, 210, 210);
 }
 
-/* Handle on hover */
-.dropdown-menu::-webkit-scrollbar-thumb:hover {
-  // background: rgb(139, 139, 139);
-}
+// /* Handle on hover */
+// .dropdown-menu::-webkit-scrollbar-thumb:hover {
+//   // background: rgb(139, 139, 139);
+// }
 
 .dropdown-menu:before {
   content: "";
