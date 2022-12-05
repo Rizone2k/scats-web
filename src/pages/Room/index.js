@@ -104,10 +104,8 @@ function Room() {
           setArrMovie(res.data);
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
-
 
   useEffect(() => {
     if (player) {
@@ -126,18 +124,14 @@ function Room() {
         }
       });
 
-      player.on('time', (e) => {
-        socket.current.emit('position', parseInt(e.position * 1000));
+      player.on("time", (e) => {
+        socket.current.emit("position", parseInt(e.position * 1000));
       });
-
     }
-
-
   }, [currentVideo, player]);
 
-
   useEffect(() => {
-    socket.current = io('http://192.168.1.6:5550/');
+    socket.current = io("http://api.scats.tk/");
     socket.current.on("user-join-room", (user) => {
       // ToastAndroid.show(`${user.username} đã vào phòng`, ToastAndroid.SHORT);
       setViewers((viewers) => [...viewers, user]);
@@ -328,14 +322,20 @@ function Room() {
                 {messages.map((e, i) => (
                   <div
                     key={i}
-                    className={`${currentUser.id == e.user.id
-                      ? "chat-current-user"
-                      : "chat-other-user "
-                      }px-2 py-1 my-1 rounded `}
+                    className={`${
+                      currentUser.id == e.user.id
+                        ? "chat-current-user "
+                        : "chat-other-user "
+                    }px-2 py-1 my-1 rounded text-break`}
                   >
-                    <img src={e.user.avatar} alt={e.user.username} />
+                    <div>
+                      <img src={e.user.avatar} alt={e.user.username} />
+                      &nbsp;
+                      {currentUser.username == e.user.username
+                        ? "You"
+                        : e.user.username}
+                    </div>
                     <p className="bg-dark my-0 px-2">{e.message}</p>
-                    &nbsp; {e.user.username}
                   </div>
                 ))}
               </div>

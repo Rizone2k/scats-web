@@ -33,7 +33,7 @@ function Together() {
   useEffect(() => {
     if (isLogIn) {
       getMyRoom();
-      getRoomLive();
+      // getRoomLive();
       // console.log(roomIsPrivate);
     } else {
       navigate("/profile");
@@ -44,19 +44,6 @@ function Together() {
     setShow(true);
   };
 
-  const getRoomLive = async () => {
-    try {
-      const res = await scatsApi.getRoomLive();
-      if (res.status == 200) {
-        const result = res.data;
-        if (result.status == "success") {
-          setRoomLive(result.data);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const getMyRoom = async () => {
     try {
       const idUser = currentUser.id;
@@ -119,6 +106,7 @@ function Together() {
               <div className="wrap-status text-center">
                 <label htmlFor="">Công khai: </label>
                 <input
+                  className="bg-dark"
                   type="radio"
                   checked={!roomIsPrivate}
                   onChange={() => {
@@ -184,7 +172,7 @@ function Together() {
           </div>
         )}
       </div>
-      <TogetherComponent roomLive={roomLive}></TogetherComponent>
+      <TogetherComponent isLogIn={isLogIn}></TogetherComponent>
     </>
   );
 }

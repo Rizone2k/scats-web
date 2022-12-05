@@ -4,9 +4,12 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   display: -webkit-box;
-  line-height: 16px;
+  line-height: 33px;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  & a:hover {
+    color: brown;
+  }
 }
 
 .wrap-room::-webkit-scrollbar {
