@@ -29,6 +29,10 @@ const scatsApi = {
     const url = "room/live";
     return instance.get(url);
   },
+  getBanner: () => {
+    const url = "movie/banner";
+    return axiosMovie.get(url);
+  },
   search: (key, params) => {
     const url = "movie/search?key=" + key;
     return axiosMovie.get(url, params);

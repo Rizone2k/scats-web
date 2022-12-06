@@ -1,31 +1,133 @@
-.mkt-3dSlider-title {
-  color: #fff;
-  font-weight: 600;
-  font-size: calc(50% + 0.5vw + 0.5vh);
+@use "../../../../scss/video-react.scss" as *;
+
+.swiper-pagination-progressbar-fill {
+  background: rgb(179, 161, 4) !important;
+}
+.hero-slide {
+  margin-bottom: 3rem;
 }
 
-.iiimg {
-  background-image: linear-gradient(
-      to top left,
-      rgba(9, 13, 19, 0.363),
-      rgba(247, 246, 245, 0.005)
-    ),
-    url("https://8phim.net/wp-content/uploads/2022/08/dune-poster-1-scaled.jpg");
+.hero-slide__item {
+  padding: 9rem 0;
+  width: 100%;
+  position: relative;
+  background-position: center;
   background-size: cover;
-  background-position: center center;
-  height: calc(100vh - 100px);
-}
-.iimg {
-  background-image: linear-gradient(
-      to top left,
-      rgba(9, 13, 19, 0.363),
-      rgba(247, 246, 245, 0.005)
-    ),
-    url("https://8phim.net/wp-content/uploads/2022/08/thor_love_and_thunder__2022.jpg");
-  background-size: cover;
-  background-position: center center;
-  height: calc(100vh - 100px);
-}
-.swiper-pagination-progressbar-fill {
-  background: aquamarine !important;
+  background-repeat: no-repeat;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // @include overlay();
+    background-color: rgba($color: #000000, $alpha: 0.7);
+  }
+
+  // &::after {
+  //   content: "";
+  //   position: absolute;
+  //   bottom: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100px;
+  //   // background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
+  //   background-image: blue;
+  // }
+
+  &__content {
+    // @include flex(center, center);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &__info {
+      width: 60%;
+      padding: 0 3rem;
+      position: relative;
+
+      & > * ~ * {
+        margin-top: 3rem;
+      }
+
+      .title {
+        font-size: 5rem;
+        font-weight: 700;
+        line-height: 1;
+
+        // @include tablet {
+        //   font-size: 4rem;
+        // }
+      }
+
+      .overview {
+        font-weight: 700;
+        color: rgb(242, 247, 196);
+      }
+
+      .btns > * ~ * {
+        margin-left: 1rem;
+      }
+
+      .btns,
+      .title,
+      .overview {
+        opacity: 0;
+        transform: translateY(-100px);
+        // transition: transform 0.5s ease, opacity 0.5s ease;
+      }
+    }
+
+    &__poster {
+      // flex: 1;
+      // @include flex(center, flex-start);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+
+      img {
+        width: 200px;
+        border-radius: 7px;
+        box-shadow: $box-shadow;
+
+        transform: scale(0);
+        transition: transform 0.7s ease;
+      }
+
+      // @include tablet {
+      //   display: none;
+      // }
+    }
+  }
+
+  &.active > &__content > &__content__poster {
+    img {
+      transform: scale(1);
+    }
+  }
+
+  &.active > &__content > &__content__info {
+    .btns,
+    .title,
+    .overview {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .title {
+      transition-delay: 0.3s, 0.3s;
+    }
+
+    .overview {
+      transition-delay: 0.6s, 0.6s;
+    }
+
+    .btns {
+      transition-delay: 0.9s, 0.9s;
+    }
+  }
 }

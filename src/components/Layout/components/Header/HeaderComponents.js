@@ -1,59 +1,60 @@
-import React from "react";
-// import { useState } from "react";
-// import { Req } from "~/data/DATA";
-import { useEffect, useState } from "react";
-
-// import { Wrapper as PopperWrapper } from "~/components/Popper";
-// import Items from "~/components/Items";
-import "./Header.mudule.scss";
+import { debounce } from "lodash";
+import React, { useState } from "react";
+import { useCallback } from "react";
+import scatsApi from "~/API/scatsApi";
+import "./Header.scss";
+import { Link } from "react-router-dom";
 
 const Search = () => {
-  const [Search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
-  useEffect(() => {
-    fetch("http://api.scats.tk/api/v1/movie")
-      .then((res) => res.json())
-      .then((res) => {
-        setData(res.data);
-      });
-  }, []);
-  // console.log(result);
 
-  const Query = (data) => {
-    return data
-      .slice(0, 30)
-      .filter(
-        (item) =>
-          item.name.toLowerCase().includes(Search) ||
-          item.slug.toLowerCase().includes(Search)
-      );
-  };
+  const SearchMovie = useCallback(
+    debounce(async (query) => {
+      setSearch(query);
+      if (query.length > 0) {
+        let response = null;
+        const params = {};
+        response = await scatsApi.search(query, { params });
+        setData(response.data.movies);
+        window.scrollTo(0, 0);
+      }
+    }, 1000),
+    []
+  );
 
   return (
-    <div className="naBar">
+    <div className="naBar py-2">
       <input
         type="text"
         className="search"
-        placeholder="Search..."
+        placeholder="Phim..."
         spellCheck={false}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => SearchMovie(e.target.value)}
       />
-      {/* <Req></Req> */}
-
       <div
         style={{ zIndex: "3" }}
         className={`result ${
-          Search !== "" ? "d-block position-absolute zindex-9" : "d-none"
+          data && search.length > 1
+            ? "d-block position-absolute zIndex-9"
+            : "d-none"
         }`}
       >
         <ul className="list bgResult" id="bgResult">
-          {Query(data).map((item, key) => (
-            <li className="listItems d-flex align-self-center row" key={key}>
-              <img className="preSent col-2" src={item.thumb} alt="avatar" />{" "}
-              <br />
-              <span className="col-10">{item.name}</span> <br />
-            </li>
-          ))}
+          {data &&
+            data.slice(0, 20).map((item, key) => (
+              <Link to={"/detail/" + item.id} key={key}>
+                <li className="listItems d-flex align-self-center row">
+                  <img
+                    className="preSent col-2"
+                    src={item.thumb}
+                    alt="avatar"
+                  />{" "}
+                  <br />
+                  <span className="col-10">{item.name}</span> <br />
+                </li>
+              </Link>
+            ))}
           {/* <Items /> */}
         </ul>
       </div>

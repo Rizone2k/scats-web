@@ -20,7 +20,8 @@ const publicRoutes = [
   { path: routesConfig.movie, components: Movie },
   { path: routesConfig.detail, components: Detail },
   { path: routesConfig.profile, components: Sign },
-  { path: routesConfig.room, components: Room, layout: FooterRemove },
+  { path: routesConfig.room, components: Room },
+  // { path: routesConfig.room, components: Room, layout: FooterRemove },
 ];
 
 const privateRoutes = [];

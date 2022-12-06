@@ -33,6 +33,7 @@ function Together() {
   useEffect(() => {
     if (isLogIn) {
       getMyRoom();
+      window.scrollTo(0, 0);
       // getRoomLive();
       // console.log(roomIsPrivate);
     } else {

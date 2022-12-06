@@ -13,7 +13,6 @@ import "./Movie.scss";
 
 function Movie() {
   const [items, setItems] = useState([]);
-  console.log(items);
   const [page, setPage] = useState(1);
 
   // Call Api render movie
@@ -22,7 +21,6 @@ function Movie() {
       let response = null;
       const params = {};
       response = await scatsApi.getMoviesList(page, { params });
-      // console.log(response.data.movies);
       setItems(response.data.movies);
       window.scrollTo(0, 0);
     };

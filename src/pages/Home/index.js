@@ -9,8 +9,8 @@ function Home() {
       <Slider />
       <div className="container-fluid pe-0 ps-4 d-flex align-items-center justify-content-between">
         <div className="">
-          <h4 className="mkt-3dSlider-title mt-4">
-            Phim thịnh hành
+          <h4 className="mkt-3dSlider-title mt-4 ">
+            <b>Phim thịnh hành</b>
             <img
               className="ps-2 pb-1"
               style={{ height: 25 }}
@@ -28,7 +28,7 @@ function Home() {
       <ListMovies numberStart={[6, 0, 18]} numberEnd={[12, 6, 24]} />
       <div className="container-fluid pe-0 ps-4 d-flex align-items-center justify-content-between">
         <h4 className="mkt-3dSlider-title mt-4">
-          Phim mới cập nhật
+          <b> Phim mới cập nhật</b>
           <img
             className="ps-2 pb-1"
             style={{ height: 25 }}
@@ -45,7 +45,7 @@ function Home() {
       <ListMovies numberStart={[12, 18, 24]} numberEnd={[18, 24, 30]} />
       <div className="container-fluid pe-0 ps-4 d-flex align-items-center justify-content-between">
         <h4 className="mkt-3dSlider-title mt-4">
-          Phim chiếu rạp
+          <b> Phim chiếu rạp</b>
           <img
             className="ps-2 pb-1"
             style={{ height: 25 }}

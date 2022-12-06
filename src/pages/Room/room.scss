@@ -92,3 +92,16 @@ li {
   width: 4rem;
   height: 4rem;
 }
+
+#controlled-tab-example-tab-playlist,
+#controlled-tab-example-tab-chat,
+#controlled-tab-example-tab-viewers {
+  font-size: 2rem;
+  padding: 1rem 5rem;
+}
+.wrap-tab {
+  background-color: rgb(31, 30, 30);
+  svg {
+    color: chocolate;
+  }
+}

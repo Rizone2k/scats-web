@@ -2,7 +2,7 @@ import JWPlayer from "@jwplayer/jwplayer-react";
 import {
   FaTrashAlt,
   FaRegPaperPlane,
-  FaListUl,
+  FaRegListAlt,
   FaRocketchat,
   FaUsers,
 } from "react-icons/fa";
@@ -22,7 +22,7 @@ import Button, {
 import { debounce } from "lodash";
 
 import "./room.scss";
-import { current } from "@reduxjs/toolkit";
+// import { current } from "@reduxjs/toolkit";
 
 function Room() {
   const { slug, id } = useParams();
@@ -52,15 +52,12 @@ function Room() {
       if (query.trim().length >= 3) {
         callApiSearchMovieLive(query);
       }
-      // console.log(query);
     }, 1000),
     []
   );
 
   const joinRoom = () => {
     socket.current.emit("join-room", parseInt(id), parseInt(currentUser.id));
-    // console.log(id, currentUser.id);
-    // console.log(socket);
   };
 
   const handleSendMessage = () => {
@@ -214,8 +211,8 @@ function Room() {
   }, []);
 
   return (
-    <>
-      <div className="container-fluid px-5 row">
+    <div className="pb-5 mb-5">
+      <div className="container-fluid px-5 row ps-5">
         <Modal
           dialogClassName=" modal-add-movie"
           className="px-0"
@@ -297,14 +294,18 @@ function Room() {
           </div>
         </div>
 
-        <div className="bg-info col-12 col-lg-4 wrap-tab">
+        <div className="col-12 col-lg-4 wrap-tab px-2">
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
             className="mb-3 d-flex justify-content-center align-content-center"
           >
-            <Tab eventKey="playlist" title="Playlist">
+            <Tab
+              className="px-2 py-2"
+              eventKey="playlist"
+              title=<FaRegListAlt></FaRegListAlt>
+            >
               <div className="wrap-playlist">
                 <Button
                   className="shadow-none bg-warning px-1 py-1"
@@ -328,7 +329,11 @@ function Room() {
                 ))}
               </div>
             </Tab>
-            <Tab eventKey="chat" title="Chat">
+            <Tab
+              className="px-2 py-2"
+              eventKey="chat"
+              title=<FaRocketchat></FaRocketchat>
+            >
               <div className="content-chat tab-content d-flex flex-column">
                 {messages.map((e, i) => (
                   <div
@@ -370,7 +375,11 @@ function Room() {
                 </button>
               </div>
             </Tab>
-            <Tab eventKey="viewers" title="Viewers">
+            <Tab
+              className="px-2 py-2"
+              eventKey="viewers"
+              title=<FaUsers></FaUsers>
+            >
               <div className="wrap-playlist d-flex align-items-center flex-column">
                 {viewers.map((e, i) => (
                   <div
@@ -390,7 +399,7 @@ function Room() {
           </Tabs>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

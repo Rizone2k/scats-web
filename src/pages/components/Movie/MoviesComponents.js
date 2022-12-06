@@ -39,7 +39,7 @@ function MoviesComponents(props) {
             .map((item, key) => {
               return (
                 <div key={key} className="px-0 py-2 card-wrap">
-                  <Link to={"/detail/" + item.slug}>
+                  <Link to={"/detail/" + item.id}>
                     <Card>
                       <Card.Img
                         variant="top"

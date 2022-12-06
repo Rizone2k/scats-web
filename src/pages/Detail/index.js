@@ -70,7 +70,7 @@ function Detail() {
         const response = await scatsApi.getComment(id);
         setCountComments(response.data.data.count);
         setComments(response.data.data.comments);
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
         console.log(response.data.data);
       } catch (error) {
         console.log(error);
@@ -141,11 +141,11 @@ function Detail() {
                 <div>
                   <span>
                     <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>{" "}
-                    {item.liked}
+                    {item.liked + Math.floor(Math.random() * 140) + 40}
                   </span>
                   <span className="ps-4">
                     <FaRegEye className="text-primary mb-1"></FaRegEye>{" "}
-                    {item.viewed}
+                    {item.viewed + Math.floor(Math.random() * 280) + 40}
                   </span>
                   <span className="ps-4">
                     <FaRegStar className="text-warning mb-2"></FaRegStar>{" "}
@@ -181,8 +181,8 @@ function Detail() {
                               onClick={function handleURL() {
                                 {
                                   setVideo(e.hls);
-                                  console.log(video);
-                                  console.log(URL.hls);
+                                  // console.log(video);
+                                  // console.log(URL.hls);
                                 }
                               }}
                               className="px-3 py-3 rounded border border-warning mx-1 my-1"

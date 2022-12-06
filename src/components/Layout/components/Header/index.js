@@ -9,7 +9,7 @@ import Search from "./HeaderComponents";
 import React, { useState, useEffect } from "react";
 import { FaBell, FaClock, FaLanguage } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-// import "./Header.mudule.scss";
+import "./Header.scss";
 // import Tippy from "@tippyjs/react";
 // import "tippy.js/dist/tippy.css";
 
@@ -33,9 +33,6 @@ function Header() {
             <NavLink to="/" className="logo ps-5 ms-5">
               Scats
             </NavLink>
-            {/* <Navbar.Brand className="logo ps-5 ms-5" href="/home">
-              Scats
-            </Navbar.Brand> */}
             <Navbar.Toggle
               aria-controls={`offcanvasNavbar-expand-${expand}`}
               className="bg-warning"
@@ -55,7 +52,9 @@ function Header() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-center flex-grow-1 pe-3 flex">
-                  <Form className="d-flex">{/* <Search></Search> */}</Form>
+                  <Form className="d-flex">
+                    <Search></Search>
+                  </Form>
                 </Nav>
                 <NavDropdown
                   className="px-3 flex"
@@ -78,10 +77,8 @@ function Header() {
                   <div className="cycle"></div>
                 </Nav.Link>
                 <Nav.Link className="px-4 flex" href="#action2">
-                  {" "}
                   <FaClock></FaClock>
                   <div className="pt-1 ps-1 clock-w">
-                    {" "}
                     &#160;
                     <strong>{currentTime}</strong>
                   </div>

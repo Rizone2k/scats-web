@@ -1,24 +1,37 @@
-import React, { useRef, useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation, EffectFade } from "swiper";
+import { FaThumbsUp, FaRegEye, FaRegStar } from "react-icons/fa";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import "./Slider.mudule.scss";
+import scatsApi from "~/API/scatsApi";
 
-// import required modules
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper";
+import "./Slider.mudule.scss";
+import { OutlineButton } from "../Button/Button";
+import { Link } from "react-router-dom";
 
 export default function Slider() {
+  const [slideItems, setSlideItems] = useState([]);
+
+  useEffect(() => {
+    const getBanner = async () => {
+      try {
+        const response = await scatsApi.getBanner();
+        setSlideItems(response.data);
+        console.log(response.data);
+      } catch {
+        console.log("error");
+      }
+    };
+    getBanner();
+  }, []);
+
   return (
-    <>
+    <div className="hero-slide">
       <Swiper
-        // pagination={{
-        //   clickable: false,
-        // }}
         autoplay={{
           delay: 9000,
           disableOnInteraction: false,
@@ -26,6 +39,8 @@ export default function Slider() {
         pagination={{
           type: "progressbar",
         }}
+        grabCursor={true}
+        spaceBetween={0}
         navigation={{ clickable: true }}
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         effect="fade"
@@ -33,79 +48,62 @@ export default function Slider() {
         scrollbar={{ draggable: true }}
         className="mySwiper text-center h-100"
       >
-        <SwiperSlide>
-          <div className="iiimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iiimg ps-3 ">
-            ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iiimg ps-3 ">
-            Lsit amet consectetur adipisicing elit. Quaerat laboriosam earum
-            odio cupiditate est facilis, orem ipsum dolor odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iiimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iiimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="iiimg ps-3 ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            laboriosam earum odio cupiditate est facilis, odit nostrum sunt
-            suscipit qui numquam eveniet alias ea nobis! Optio magni quisquam
-            est illum!
-          </div>
-        </SwiperSlide>
+        {slideItems.map((item, i) => (
+          <SwiperSlide key={i}>
+            {({ isActive }) => (
+              <HeroSlideItem
+                item={item}
+                className={`${isActive ? "active" : ""}`}
+              />
+            )}
+          </SwiperSlide>
+        ))}
       </Swiper>
-    </>
+    </div>
   );
 }
+
+const HeroSlideItem = (props) => {
+  const item = props.item;
+
+  return (
+    <Link to={"/detail/" + item.id}>
+      <div
+        className={`hero-slide__item ${props.className}`}
+        style={{
+          backgroundImage: `url("https://image.tmdb.org/t/p/original//90ZZIoWQLLEXSVm0ik3eEQBinul.jpg")`,
+        }}
+        // style={{ backgroundImage: `url(${item.background})` }}
+      >
+        <div className="hero-slide__item__content container-fluid">
+          <div className="hero-slide__item__content__info">
+            <h2 className="title text-light">{item.name}</h2>
+            <div
+              className="overview"
+              dangerouslySetInnerHTML={{ __html: item.content }}
+            ></div>
+            <div className="btns">
+              <span className="review-action">
+                <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>{" "}
+                {item.liked + Math.floor(Math.random() * 140) + 40}
+              </span>
+              <span className="ps-4 review-action">
+                <FaRegEye className="text-primary mb-1"></FaRegEye>{" "}
+                {item.viewed + Math.floor(Math.random() * 280) + 40}
+              </span>
+              <span className="ps-4 review-action">
+                <FaRegStar className="text-warning mb-2"></FaRegStar>{" "}
+                {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
+              </span>
+              <br /> <br />
+              <OutlineButton className="border-warning">Xem ngay</OutlineButton>
+            </div>
+          </div>
+          <div className="hero-slide__item__content__poster">
+            <img src={item.thumb} alt="" />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
