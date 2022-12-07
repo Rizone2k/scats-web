@@ -25,7 +25,7 @@ function Home() {
           </Link>
         </div>
       </div>
-      <ListMovies numberStart={[6, 0, 18]} numberEnd={[12, 6, 24]} />
+      <ListMovies page={1} />
       <div className="container-fluid pe-0 ps-4 d-flex align-items-center justify-content-between">
         <h4 className="mkt-3dSlider-title mt-4">
           <b> Phim mới cập nhật</b>
@@ -42,7 +42,7 @@ function Home() {
           </Link>
         </div>
       </div>
-      <ListMovies numberStart={[12, 18, 24]} numberEnd={[18, 24, 30]} />
+      <ListMovies page={2} />
       <div className="container-fluid pe-0 ps-4 d-flex align-items-center justify-content-between">
         <h4 className="mkt-3dSlider-title mt-4">
           <b> Phim chiếu rạp</b>
@@ -59,8 +59,8 @@ function Home() {
           </Link>
         </div>
       </div>
-      <ListMovies numberStart={[24, 30, 2]} numberEnd={[30, 36, 8]} />
-      <ListMovies numberStart={[16, 6, 12]} numberEnd={[22, 12, 18]} />
+      <ListMovies page={3} />
+      <ListMovies page={2} />
     </>
   );
 }

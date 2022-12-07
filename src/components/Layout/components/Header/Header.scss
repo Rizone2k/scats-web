@@ -80,13 +80,9 @@
   padding: 2px;
 }
 
-/* Track */
-#bgResult::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
 /* Handle */
 #bgResult::-webkit-scrollbar-thumb {
+  visibility: hidden;
   background: rgb(211, 210, 210);
 }
 

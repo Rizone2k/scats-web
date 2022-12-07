@@ -21,7 +21,7 @@ export default function Slider() {
       try {
         const response = await scatsApi.getBanner();
         setSlideItems(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch {
         console.log("error");
       }

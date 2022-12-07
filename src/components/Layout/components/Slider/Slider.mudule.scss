@@ -119,14 +119,23 @@
     }
 
     .title {
+      transition-property: all;
+      transition-duration: 0.5s;
+      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
       transition-delay: 0.3s, 0.3s;
     }
 
     .overview {
+      transition-property: all;
+      transition-duration: 0.5s;
+      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
       transition-delay: 0.6s, 0.6s;
     }
 
     .btns {
+      transition-property: all;
+      transition-duration: 0.5s;
+      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
       transition-delay: 0.9s, 0.9s;
     }
   }

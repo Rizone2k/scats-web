@@ -60,6 +60,7 @@ const Sidebar = () => {
     dispatch(logout())
       .then(unwrapResult)
       .then(handleClose())
+      .the(window.location.assign("http://localhost:3000/"))
       .catch((err) => console.log(err));
   };
   return (
