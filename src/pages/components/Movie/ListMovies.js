@@ -27,7 +27,7 @@ function ListMovies(page) {
         const params = {};
         const response = await scatsApi.getMoviesList(page.page, { params });
         setItems(response.data.movies);
-        console.log(response.data.movies);
+        // console.log(response.data.movies);
         window.scrollTo(0, 0);
       } catch (error) {
         console.log(error);

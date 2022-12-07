@@ -31,3 +31,34 @@
 .wrap-room::-webkit-scrollbar-thumb:hover {
   background: rgb(43, 41, 41);
 }
+
+input[type="radio"] {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 15px;
+  position: relative;
+  height: 25px;
+  width: 25px;
+  // -webkit-appearance: none;
+}
+input[type="radio"]:checked:after {
+  background-color: var(--color-logo);
+  border-radius: 25px;
+  content: "";
+  display: block;
+  position: relative;
+  left: 5px;
+  top: 5px;
+  height: 15px;
+  width: 15px;
+}
+
+.bg-warning-create-room {
+  background-color: #e3ab03;
+}
+
+.middle-create-room {
+  .modal-content {
+    background-color: #d6c8b1;
+  }
+}

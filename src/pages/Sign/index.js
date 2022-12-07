@@ -20,11 +20,6 @@ export default function index() {
   // const [Info, setInfo] = useState({});
   const [show, setShow] = useState(true);
 
-  // useEffect(() => {
-  //   currentUser.data && setInfo(info.data.data.user);
-  // }),
-  //   [info];
-  // Call Api render filter
   useEffect(() => {
     const fil = async () => {
       let response = null;
@@ -43,11 +38,12 @@ export default function index() {
 
   return (
     <>
-      {show == true && (
+      {isLogin == true && (
         <Alert
           className="position-absolute"
-          style={{ top: "10px", right: "10px" }}
+          style={{ top: "80px", right: "10px" }}
           variant="success"
+          show={show}
           // onClose={}
           onClose={() => setShow(false)}
           dismissible

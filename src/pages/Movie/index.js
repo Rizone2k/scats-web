@@ -10,6 +10,7 @@ import Button, {
 
 import scatsApi from "~/API/scatsApi";
 import "./Movie.scss";
+import { FaHeart, FaRegEye, FaRegStar, FaThumbsUp } from "react-icons/fa";
 
 function Movie() {
   const [items, setItems] = useState([]);
@@ -66,11 +67,44 @@ function Movie() {
                             "http://img.ophim1.cc/uploads/movies/phi-vu-trieu-do-phan-3-thumb.jpg"
                           }
                         />
-                        <Card.Body className="px-2 py-3 ">
+                        <Card.Body className="py-3 px-0">
                           <Card.Title title={item.name}>{item.name}</Card.Title>
 
-                          <Card.Text className="overlay" title={item.name}>
+                          <Card.Text className="overlay " title={item.name}>
+                            <Card.Img
+                              variant="top"
+                              title={item.name || item.aka}
+                              src={item.thumb}
+                            />
                             {item.name}
+                            <div className="btns">
+                              <span className="review-action">
+                                <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>
+                                {item.liked +
+                                  Math.floor(Math.random() * 140) +
+                                  40}
+                              </span>
+                              <span className="ps-4 review-action">
+                                <FaRegEye className="text-primary mb-1"></FaRegEye>
+                                {item.viewed +
+                                  Math.floor(Math.random() * 280) +
+                                  40}
+                              </span>
+                              <span className="ps-4 review-action">
+                                <FaRegStar className="text-warning mb-2"></FaRegStar>
+                                {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
+                              </span>
+                              <br /> <br />
+                              <OutlineButton className="border-warning">
+                                Xem ngay
+                              </OutlineButton>
+                              <OutlineButton
+                                onClick={() => alert("oke")}
+                                className={"px-3 py-1 ms-5"}
+                              >
+                                <FaHeart></FaHeart>
+                              </OutlineButton>
+                            </div>
                           </Card.Text>
                         </Card.Body>
                       </Card>

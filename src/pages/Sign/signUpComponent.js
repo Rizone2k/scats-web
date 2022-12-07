@@ -2,7 +2,7 @@
 import { OutlineButton } from "~/components/Layout/components/Button/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "~/redux/reducers/auth";
+import { register } from "~/redux/reducers/auth";
 import { unwrapResult } from "@reduxjs/toolkit";
 import Alert from "react-bootstrap/Alert";
 
@@ -11,6 +11,7 @@ const SignUpForm = (title) => {
   const [show, setShow] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [response, setResponse] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -20,27 +21,32 @@ const SignUpForm = (title) => {
         username: userName,
         password: password,
       };
-      dispatch(login(user))
-        .then(() => setShow(true))
+      dispatch(register(user))
+        .then()
         .then(unwrapResult)
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          setResponse(false);
+          setShow(true);
+        });
     }
   };
 
   return title.title == "Sign Up" ? (
     <>
       <h3 className=" title-weight pb-3">{title.title}</h3>
-      {show == true && (
+      {response == false && (
         <Alert
           className="position-absolute"
-          style={{ top: "10px", right: "10px" }}
-          variant="success"
+          style={{ top: "80px", right: "10px" }}
+          variant="danger"
+          show={show}
           // onClose={}
           onClose={() => setShow(false)}
           dismissible
         >
           <Alert.Heading className="px-2 my-1">
-            Dang nhap thanh cong!
+            Tài khoản đã tồn tại!
           </Alert.Heading>
         </Alert>
       )}

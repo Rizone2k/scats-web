@@ -34,35 +34,29 @@ const authSlice = createSlice({
   },
 });
 
-// export const register = createAsyncThunk(
-//   "auth/register",
-//   async ({ username, password }, { rejectWithValue }) => {
-//     try {
-//       const res = await instance.post(`/auth/register`, { username, password });
-//       // const res = await axios.post(`http://api.scats.tk/api/v1/auth/login`, {
-//       //   username,
-//       //   password,
-//       // });
-
-//       console.log(res);
-//       if (res.status == 200) {
-//         if (res.data.status == "success") {
-//           Cookies.set("access_token", res.data.data.access_token);
-//           //   await SecureStore.setItemAsync("uid", String(res.data.data.user.id));
-//           return res.data.data.user;
-//         } else {
-//           throw rejectWithValue(res.data.message);
-//         }
-//       }
-//     } catch (error) {
-//       if (error.payload) {
-//         throw rejectWithValue(error.payload);
-//       } else {
-//         throw error;
-//       }
-//     }
-//   }
-// );
+export const register = createAsyncThunk(
+  "auth/register",
+  async ({ username, password }, { rejectWithValue }) => {
+    try {
+      const res = await instance.post(`/auth/register`, { username, password });
+      // console.log(res);
+      if (res.status == 200) {
+        if (res.data.status == "success") {
+          Cookies.set("access_token", res.data.data.access_token);
+          return res.data.data.user;
+        } else {
+          throw rejectWithValue(res.data.message);
+        }
+      }
+    } catch (error) {
+      if (error.payload) {
+        throw rejectWithValue(error.payload);
+      } else {
+        throw error;
+      }
+    }
+  }
+);
 export let info = {};
 
 export const login = createAsyncThunk(
@@ -154,7 +148,6 @@ export const updateInfo = createAsyncThunk(
       const res = await instance.post(`/user/update`, formData);
       if (res.status == 200) {
         if (res.data.status == "success") {
-          console.log(res.data.data);
           return res.data.data;
         } else {
           throw rejectWithValue(res.data.message);

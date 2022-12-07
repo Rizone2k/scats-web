@@ -76,7 +76,12 @@ const Filter = ({ setItems }) => {
           {itemsCountry.map((i, e) => (
             <React.Fragment key={e}>
               <NavDropdown.Item className="fs-4 text">
-                <strong onClick={() => setCountry(i.id)}>
+                <strong
+                  onClick={() => {
+                    setCountry(i.id);
+                    setTitleCountry(i.name);
+                  }}
+                >
                   <p onClick={() => SetCheck(true)}>{i.name}</p>
                 </strong>
               </NavDropdown.Item>
@@ -90,7 +95,12 @@ const Filter = ({ setItems }) => {
           {itemsYear.map((i, e) => (
             <React.Fragment key={e}>
               <NavDropdown.Item className="fs-4 text">
-                <strong onClick={() => setYear(i.id)}>
+                <strong
+                  onClick={() => {
+                    setYear(i.id);
+                    setTitleYear(i.name);
+                  }}
+                >
                   <p onClick={() => SetCheck(true)}>{i.name}</p>
                 </strong>
               </NavDropdown.Item>
@@ -104,7 +114,12 @@ const Filter = ({ setItems }) => {
           {itemsGenre.map((i, e) => (
             <React.Fragment key={e}>
               <NavDropdown.Item className="fs-4 text">
-                <strong onClick={() => alert("Try late!")}>
+                <strong
+                  onClick={() => {
+                    alert("Try late!");
+                    setTitleGenre(i.name);
+                  }}
+                >
                   <p onClick={() => SetCheck(true)}>{i.name}</p>
                 </strong>
               </NavDropdown.Item>
@@ -118,7 +133,12 @@ const Filter = ({ setItems }) => {
           {itemsType.map((i, e) => (
             <React.Fragment key={e}>
               <NavDropdown.Item className="fs-4 text">
-                <strong onClick={() => setType(i.id)}>
+                <strong
+                  onClick={() => {
+                    setType(i.id);
+                    setTitleType(i.name);
+                  }}
+                >
                   <p onClick={() => SetCheck(true)}>{i.name}</p>
                 </strong>
               </NavDropdown.Item>

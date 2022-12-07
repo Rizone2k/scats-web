@@ -8,9 +8,10 @@ import { unwrapResult } from "@reduxjs/toolkit";
 
 import "./sign.scss";
 const SignInForm = (title) => {
-  // const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -22,13 +23,32 @@ const SignInForm = (title) => {
       };
       dispatch(login(user))
         .then(unwrapResult)
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          setError(err);
+          setShow(true);
+        });
     }
   };
 
   return title.title == "Sign In" ? (
     <>
       <h3 className=" title-weight pb-3">{title.title}</h3>
+      {error == "Not found" && (
+        <Alert
+          className="position-absolute"
+          style={{ top: "80px", right: "10px" }}
+          variant="danger"
+          show={show}
+          // onClose={}
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          <Alert.Heading className="px-2 my-1">
+            <small>Tài khoản không đúng!</small>
+          </Alert.Heading>
+        </Alert>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>User name</label>

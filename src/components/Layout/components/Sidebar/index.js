@@ -16,7 +16,7 @@ import {
   FaDoorOpen,
   FaThumbsUp,
 } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Sidebar.mudule.scss";
 import routesConfig from "~/config/routes";
 import { OutlineButton } from "../Button/Button";
@@ -29,6 +29,9 @@ const Sidebar = () => {
   const isLogin = useSelector(isLoggedInSelector);
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+
+  const navigate = useNavigate();
+
   const menuItem = [
     {
       path: routesConfig.home,
@@ -57,10 +60,10 @@ const Sidebar = () => {
     },
   ];
   const handleLogOutClick = () => {
+    handleClose();
     dispatch(logout())
       .then(unwrapResult)
-      .then(handleClose())
-      .the(window.location.assign("http://localhost:3000/"))
+      .the(navigate("/profile"))
       .catch((err) => console.log(err));
   };
   return (

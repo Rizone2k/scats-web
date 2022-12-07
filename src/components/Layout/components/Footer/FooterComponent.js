@@ -12,7 +12,7 @@ function Footer() {
               <h4>Hãy liên hệ ngay với chúng tôi!</h4>
             </div>
             <div className="ms-auto">
-              <a href="#" className="btn btn-dark rounded-0 py-3 px-5">
+              <a href="#" className="btn btn-dark shadow-none py-3 px-5">
                 <h5>Liên hệ ngay</h5>
               </a>
             </div>

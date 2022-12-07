@@ -54,6 +54,7 @@ function Together() {
         const result = res.data;
         if (result.status == "success") {
           setHasRoom(result.data);
+          console.log(result.data.private);
         }
       }
     } catch (error) {
@@ -85,17 +86,29 @@ function Together() {
     }
   };
 
+  const handleJoinRoom = () => {
+    hasRoom.private = false
+      ? navigate(`/room/${hasRoom.slug}/${hasRoom.id}`)
+      : alert("Please try again");
+  };
+
   return (
     <>
       {show == true && (
         <>
-          <Modal show={show} onHide={handleClose}>
+          <Modal
+            className="middle-create-room"
+            show={show}
+            onHide={handleClose}
+          >
             <Modal.Header closeButton>
-              <Modal.Title>Tạo phòng</Modal.Title>
+              <Modal.Title>
+                <b>Tạo phòng</b>
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center flex-wrap flex-column">
               <Input
-                className="bg-dark"
+                className="text-light bg-warning-create-room"
                 type="text"
                 placeholder="Tên phòng...."
                 value={roomName}
@@ -105,17 +118,20 @@ function Together() {
               ></Input>
               <br />
               <div className="wrap-status text-center">
-                <label htmlFor="">Công khai: </label>
+                <label htmlFor="">
+                  <b>Công khai:</b>&nbsp;
+                </label>
                 <input
-                  className="bg-dark"
                   type="radio"
                   checked={!roomIsPrivate}
                   onChange={() => {
                     setRoomIsPrivate(false);
                   }}
                 ></input>
-                &nbsp;
-                <label htmlFor="">Riêng tư: </label>
+                &nbsp;&nbsp; &nbsp; &nbsp;
+                <label htmlFor="">
+                  <b>Riêng tư:</b>&nbsp;
+                </label>
                 <input
                   type="radio"
                   checked={roomIsPrivate}
@@ -126,8 +142,11 @@ function Together() {
               </div>
               {roomIsPrivate && (
                 <>
-                  <label htmlFor="">password: </label>
+                  <label htmlFor="">
+                    <b>Mật khẩu:</b>
+                  </label>
                   <input
+                    className="bg-warning-create-room text-light"
                     type="password"
                     onChange={(e) => {
                       setRoomPass(e.target.value);
@@ -138,7 +157,11 @@ function Together() {
               )}
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="primary" onClick={handleCreateRoom}>
+              <Button
+                className="shadow-none bg-dark border-0"
+                variant="primary"
+                onClick={handleCreateRoom}
+              >
                 Tạo phòng
               </Button>
             </Modal.Footer>
@@ -147,27 +170,37 @@ function Together() {
       )}
       <div className=" container-fluid px-4 d-flex flex-column align-items-center bg-sign py-5">
         <div className="title flex-start align-items-center">
+          <br />
           <h3>
             <FaVideo className="text-warning "></FaVideo> Phòng của tôi:
           </h3>
+          <br />
         </div>
         {hasRoom == null ? (
           <div className="join-room py-4">
-            <Button type="button" onClick={openModalCreateRoom}>
+            <Button
+              className="bg-black border-0 text-light py-3"
+              type="button"
+              onClick={openModalCreateRoom}
+            >
               Tạo phòng
             </Button>
           </div>
         ) : (
           <div className="join-room py-4 text-center ">
             <div className="d-flex flex-wrap">
-              <Link to={`/room/${hasRoom.slug}/${hasRoom.id}`}>
-                <Button type="button">Tham gia phòng</Button>
-              </Link>
+              <Button
+                onClick={() => handleJoinRoom()}
+                className="bg-black border-0 text-light py-3"
+                type="button"
+              >
+                Tham gia phòng
+              </Button>
             </div>
             <br />
 
             <span>
-              <b>ID:</b>
+              <b>ID: </b>
               {hasRoom.name}
             </span>
           </div>
