@@ -44,6 +44,7 @@ export const register = createAsyncThunk(
         if (res.data.status == "success") {
           Cookies.set("access_token", res.data.data.access_token);
           return res.data.data.user;
+          console.log(data.data.user);
         } else {
           throw rejectWithValue(res.data.message);
         }
