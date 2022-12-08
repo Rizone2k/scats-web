@@ -98,6 +98,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 .btn-watch:hover {
@@ -132,7 +133,7 @@
 }
 
 .content-user {
-  background-color: rgb(57, 61, 61);
+  background-color: rgb(23, 27, 27);
   color: bisque;
   p {
     margin: 3px;

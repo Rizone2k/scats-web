@@ -47,27 +47,52 @@
 }
 
 .card-title {
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
   overflow: hidden;
   color: rgb(255, 255, 255);
   font-weight: 500;
   font-size: 1.3rem;
   height: 3rem;
 }
-.card-text {
+.card-img-overlay {
+  // display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
   overflow: hidden;
   color: rgb(255, 255, 255);
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   height: 100%;
+  & p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    margin-bottom: 0;
+  }
+  @media screen and (max-width: 1200px) {
+    p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 1;
+      margin-bottom: 0;
+    }
+  }
 }
 
-@media screen and (max-width: 1000px) {
-  .card-text,
+@media screen and (max-width: 1100px) {
+  .card-ImgOverlay,
   .card-title {
     font-size: 0.8rem;
+  }
+  .card:hover .overlay {
+    opacity: 0;
   }
 }

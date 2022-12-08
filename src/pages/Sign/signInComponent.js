@@ -91,9 +91,9 @@ const SignInForm = (title) => {
             Sign in
           </OutlineButton>
         </div>
-        <p className="forgot-password text-right">
+        <div className="forgot-password text-right">
           Forgot <a href="#">password?</a>
-        </p>
+        </div>
       </form>
     </>
   ) : (

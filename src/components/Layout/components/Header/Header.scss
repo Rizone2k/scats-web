@@ -68,11 +68,14 @@
 
 #bgResult {
   z-index: 99;
-  background-color: var(--bgLightBlue);
+  background-color: #d6c8b1;
+  color: #fff;
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
   height: 40rem;
+  font-weight: 600;
+  font-size: 14px;
   /* width */
 }
 #bgResult::-webkit-scrollbar {
@@ -99,8 +102,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(-45deg, #103783 0%, #a7a8a8 100%);
-  transform: translate3d(0px, 20px, 0) scale(0.95);
+  background: linear-gradient(-45deg, #103783 0%, #a8a8a7 100%);
+  transform: translate3d(0px, 10px, 0) scale(0.95);
   filter: blur(20px);
   transition: opacity 0.3s;
   border-radius: inherit;

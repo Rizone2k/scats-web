@@ -70,13 +70,16 @@ function Movie() {
                         <Card.Body className="py-3 px-0">
                           <Card.Title title={item.name}>{item.name}</Card.Title>
 
-                          <Card.Text className="overlay " title={item.name}>
+                          <Card.ImgOverlay
+                            className="overlay "
+                            title={item.name}
+                          >
                             <Card.Img
                               variant="top"
                               title={item.name || item.aka}
                               src={item.thumb}
                             />
-                            {item.name}
+                            <p> {item.name}</p>
                             <div className="btns">
                               <span className="review-action">
                                 <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>
@@ -105,7 +108,7 @@ function Movie() {
                                 <FaHeart></FaHeart>
                               </OutlineButton>
                             </div>
-                          </Card.Text>
+                          </Card.ImgOverlay>
                         </Card.Body>
                       </Card>
                     </Link>

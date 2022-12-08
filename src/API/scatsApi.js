@@ -25,6 +25,10 @@ const scatsApi = {
     const url = "comment/" + id;
     return instance.get(url);
   },
+  getLibrary: (userID) => {
+    const url = "library/" + userID;
+    return axiosMovie.get(url);
+  },
   getRoomLive: () => {
     const url = "room/live";
     return instance.get(url);

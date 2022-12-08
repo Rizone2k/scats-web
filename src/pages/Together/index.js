@@ -87,7 +87,7 @@ function Together() {
   };
 
   const handleJoinRoom = () => {
-    hasRoom.private = false
+    hasRoom.private = true
       ? navigate(`/room/${hasRoom.slug}/${hasRoom.id}`)
       : alert("Please try again");
   };

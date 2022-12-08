@@ -1,7 +1,12 @@
 import { useParams } from "react-router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { UnmountClosed } from "react-collapse";
 import JWPlayer from "@jwplayer/jwplayer-react";
+import { currentUserSelector } from "~/redux/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { sendComment, sendReply } from "~/redux/reducers/comment";
+import commentsSlice from "~/redux/reducers/comment";
+import { commentsSelector } from "~/redux/selectors";
 
 import {
   FaRegPaperPlane,
@@ -21,69 +26,124 @@ import "./Detail.scss";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { motion } from "framer-motion";
-// import ListMovies from "../components/Movie/ListMovies";
 
 function Detail() {
   let { id } = useParams();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(currentUserSelector);
+
+  const comment = useSelector(commentsSelector);
+  console.log(comment);
+  // const [openReplyInput, setOpenReplyInput] = useState(null);
+
+  const [commentText, setCommentText] = useState(""); /* text input to send*/
+  const [replyText, setReplyText] = useState(""); /* text input to send reply*/
+  const [idComment, setIdComment] = useState(id); /* id to send cmt*/
 
   const [items, setItems] = useState([]);
+  const [comments, setComments] = useState([]); /* Get cmt*/
   const [open, setOpen] = useState(false);
   const [openReply, setOpenReply] = useState(false);
   const [item, setItem] = useState(null);
   const [video, setVideo] = useState("");
   const [countComment, setCountComments] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [idRepliesComment, setIdRepliesComment] = useState(id);
-  const [textRepliesComment, setTextIdRepliesComment] = useState("");
-  console.log(idRepliesComment);
 
-  // similar
+  let URL = video[video.length - 1];
+
+  // send comments 1.Content 2.Id_User 3.Id_Movie
+  // send comments reply 1.Content 2.Id_User 3.Id_Cmt_Reply
+
+  const handleKeypress = (e) => {
+    if (e.charCode === 13) {
+      handleSendComment();
+      // handleSendComment();
+    }
+  };
+
+  // const handleSendComment = () => {
+  //   console.log(idRepliesComment, textRepliesComment);
+  // };
+
+  // Send comments
+  const handleSendComment = async () => {
+    console.log(commentText + "/" + currentUser.id + "/" + idComment);
+    if (commentText.trim().length > 0) {
+      dispatch(
+        sendComment({
+          content: commentText.trim(),
+          idUser: currentUser.id,
+          idComment,
+        })
+      ).catch((err) => {
+        console.log(err);
+      });
+      setCommentText("");
+    } else {
+      console.log("Vui lòng nhập bình luận");
+    }
+  };
+  // Send comments reply
+  const SendReply = () => {
+    if (replyText.length > 0) {
+      dispatch(
+        sendReply({
+          content: replyText.trim(),
+          idUser: currentUser.id,
+          idCmt: idComment,
+        })
+      ).catch((err) => {
+        console.log(err);
+      });
+      setReplyText("");
+    } else {
+      console.log("Vui lòng nhập bình luận");
+    }
+  };
+
   useEffect(() => {
+    // similar cheat-code
     const getList = async () => {
-      let response = null;
-      const params = {};
-      response = await scatsApi.getMoviesList(3, { params });
-      // console.log(response.data.movies);
-      setItems(response.data.movies);
-      // window.scrollTo(0, 0);
+      try {
+        let response = null;
+        const params = {};
+        response = await scatsApi.getMoviesList(3, { params });
+        window.scrollTo(0, 0);
+        setItems(response.data.movies);
+      } catch (error) {
+        console.log(error);
+      }
     };
-    getList();
-  }, []);
-
-  // Detail movie
-  useEffect(() => {
+    // Get detail movie
     const getDetail = async () => {
-      const params = {};
-      const response = await scatsApi.detail(id, params);
-      setItem(response.data);
-      setVideo(response.data.Episodes);
-      // window.scrollTo(0, 0);
-      // console.log(response.data);
+      try {
+        const params = {};
+        const response = await scatsApi.detail(id, params);
+        setItem(response.data);
+        setVideo(response.data.Episodes);
+        window.scrollTo(0, 0);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getDetail();
+
+    getList();
   }, [id]);
 
-  // Comments
   useEffect(() => {
+    // Get comments
     const getComment = async () => {
       try {
         const response = await scatsApi.getComment(id);
         setCountComments(response.data.data.count);
         setComments(response.data.data.comments);
         window.scrollTo(0, 0);
-        // console.log(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
     getComment();
-  }, []);
-
-  const handleSendCommand = () => {
-    console.log(idRepliesComment, textRepliesComment);
-  };
-
-  let URL = video[video.length - 1];
+  }, [id]);
 
   return (
     <>
@@ -205,7 +265,7 @@ function Detail() {
 
             <div className="wrap-player-video row">
               <div
-                className="col-12 col-lg-9 col-md-9 section mb-3 wrap-player-video_watch"
+                className="py-2 col-12 col-lg-9 col-md-9 section mb-3 wrap-player-video_watch wrap-player d-flex justify-content-center"
                 id="watch"
               >
                 <JWPlayer
@@ -244,7 +304,7 @@ function Detail() {
                                     &nbsp; &nbsp;
                                     <a
                                       className="pe-5"
-                                      onClick={() => setIdRepliesComment(e.id)}
+                                      onClick={() => setIdComment(e.id)}
                                     >
                                       Bình luận
                                     </a>
@@ -252,7 +312,7 @@ function Detail() {
                                 ) : (
                                   <a
                                     className="pe-5"
-                                    onClick={() => setIdRepliesComment(e.id)}
+                                    onClick={() => setIdComment(e.id)}
                                   >
                                     Bình luận
                                   </a>
@@ -277,15 +337,18 @@ function Detail() {
                   </div>
                   <div className="input-wrap position-relative flex-row justify-content-center align-items-end pt-2">
                     <input
-                      onChange={(e) => setTextIdRepliesComment(e.target.value)}
+                      onChange={(e) => setCommentText(e.target.value)}
+                      // onChange={(e) => setTextIdRepliesComment(e.target.value)}
+                      onKeyPress={(e) => handleKeypress(e)}
                       className="input-chat w-100"
                       type="text"
+                      value={commentText}
                     />
                     <button
                       title="Send"
                       className="border-0 btn-send"
                       type="button"
-                      onClick={() => handleSendCommand()}
+                      onClick={() => handleSendComment()}
                     >
                       <FaRegPaperPlane></FaRegPaperPlane>
                     </button>
@@ -336,14 +399,7 @@ function Detail() {
                                     >
                                       {item.name}
                                     </Card.Title>
-
-                                    <Card.Text
-                                      className="overlay"
-                                      title={item.name}
-                                    >
-                                      {item.name}
-                                    </Card.Text>
-                                    <Card.Text
+                                    <Card.ImgOverlay
                                       className="overlay "
                                       title={item.name}
                                     >
@@ -352,7 +408,7 @@ function Detail() {
                                         title={item.name || item.aka}
                                         src={item.thumb}
                                       />
-                                      {item.name}
+                                      <p> {item.name}</p>
                                       <div className="btns">
                                         <span className="review-action">
                                           <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>
@@ -383,7 +439,7 @@ function Detail() {
                                           <FaHeart></FaHeart>
                                         </OutlineButton>
                                       </div>
-                                    </Card.Text>
+                                    </Card.ImgOverlay>
                                   </Card.Body>
                                 </Card>
                               </Link>
@@ -394,7 +450,6 @@ function Detail() {
                     </React.Fragment>
                   ))}
                 </div>
-                {/* <ListMovies></ListMovies> */}
               </div>
             </div>
           </div>

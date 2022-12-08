@@ -89,7 +89,7 @@ const SignUpForm = (title) => {
 
         <div className="text-center">
           <OutlineButton type="submit" className="bg-dark w-50 text-light">
-            Sign in
+            Sign Up
           </OutlineButton>
         </div>
         <p className="forgot-password text-right">

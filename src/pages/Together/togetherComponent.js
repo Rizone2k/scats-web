@@ -64,8 +64,8 @@ function TogetherComponent({ isLogin }) {
           />
         </div>
       </div>
-      <div className="list-room container rounded py-3">
-        <div className="py-2 d-flex flex-wrap wrap-room">
+      <div className="list-room container rounded py-2">
+        <div className="py-3 d-flex flex-wrap wrap-room">
           {listRoom.map((item) => (
             <Link key={item.id} to={`/room/${item.slug}/${item.id}`}>
               <span className="px-3 py-3 rounded border border-warning mx-1 my-1">

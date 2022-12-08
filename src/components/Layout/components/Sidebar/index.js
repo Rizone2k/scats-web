@@ -63,7 +63,7 @@ const Sidebar = () => {
     handleClose();
     dispatch(logout())
       .then(unwrapResult)
-      .the(navigate("/profile"))
+      .then(navigate("/profile"))
       .catch((err) => console.log(err));
   };
   return (

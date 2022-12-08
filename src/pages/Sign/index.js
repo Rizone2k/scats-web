@@ -19,21 +19,23 @@ export default function index() {
   const currentUser = useSelector(currentUserSelector);
   // const [Info, setInfo] = useState({});
   const [show, setShow] = useState(true);
+  window.scrollTo(0, 0);
 
   useEffect(() => {
     const fil = async () => {
       let response = null;
       const params = {};
-
+      window.scrollTo(0, 0);
       response = await scatsApi.category(categoryParam.genre, { params });
       setItemsGenre(response.data);
     };
     fil();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Sended!");
+  const handleSubmit = () => {
+    // e.preventDefault();
+    console.log("roi");
+    // alert("Sended!");
   };
 
   return (
@@ -80,6 +82,7 @@ export default function index() {
                           className="btn btn-outline-dark bg-dark cursor-none"
                           data-mdb-ripple-color="dark"
                           style={{ zIndex: "1" }}
+                          onClick={() => handleSubmit()}
                         >
                           Chỉnh sửa
                         </OutlineButton>
@@ -132,13 +135,13 @@ export default function index() {
                             &nbsp;Gợi ý phim yêu thích
                           </b>
                         </h4>
-                        <p className="mb-0 pe-4">
+                        <div className="mb-0 pe-4">
                           <Link to={"/movies"}>
                             <OutlineButton className="out-line bg-warning">
                               Xem Thêm
                             </OutlineButton>
                           </Link>
-                        </p>
+                        </div>
                       </div>
                       <div className="row g-2">
                         <div className="col mb-2 d-flex flex-wrap justify-content-center">

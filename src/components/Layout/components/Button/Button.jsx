@@ -7,6 +7,7 @@ const Button = (props) => {
   return (
     <button
       className={`btn ${props.className}`}
+      title={`${props.title}`}
       onClick={props.onClick ? () => props.onClick() : null}
     >
       {props.children}
@@ -17,6 +18,7 @@ const Button = (props) => {
 export const OutlineButton = (props) => {
   return (
     <Button
+      title={`${props.title}`}
       className={`btn-outline ${props.className}`}
       onClick={props.onClick ? () => props.onClick() : null}
     >

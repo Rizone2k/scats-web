@@ -34,26 +34,31 @@ const Search = () => {
       />
       <div
         style={{ zIndex: "3" }}
+        onClick={() => setSearch("")}
         className={`result ${
-          data && search.length > 1
+          data && search.length > 0
             ? "d-block position-absolute zIndex-9"
             : "d-none"
         }`}
       >
-        <ul className="list bgResult" id="bgResult">
+        <ul className="list bgResult px-3" id="bgResult">
           {data &&
             data.slice(0, 20).map((item, key) => (
-              <Link to={"/detail/" + item.id} key={key}>
-                <li className="listItems d-flex align-self-center row">
+              <li key={key}>
+                <Link
+                  className="listItems d-flex align-self-center row"
+                  to={"/detail/" + item.id}
+                >
                   <img
                     className="preSent col-2"
                     src={item.thumb}
                     alt="avatar"
                   />{" "}
                   <br />
-                  <span className="col-10">{item.name}</span> <br />
-                </li>
-              </Link>
+                  <span className="col-10 text-black">{item.name}</span> <br />
+                </Link>
+                <hr className=" py-0 my-1 border-dark" />
+              </li>
             ))}
           {/* <Items /> */}
         </ul>

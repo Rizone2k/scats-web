@@ -79,13 +79,13 @@ function ListMovies(page) {
                   <Card.Title className="px-2" title={item.name}>
                     {item.name}
                   </Card.Title>
-                  <Card.Text className="overlay " title={item.name}>
+                  <Card.ImgOverlay className="overlay" title={item.name}>
                     <Card.Img
                       variant="top"
                       title={item.name || item.aka}
                       src={item.thumb}
                     />
-                    {item.name}
+                    <p> {item.name}</p>
                     <div className="btns">
                       <span className="review-action">
                         <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>
@@ -100,17 +100,19 @@ function ListMovies(page) {
                         {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
                       </span>
                       <br /> <br />
-                      <OutlineButton className="border-warning">
-                        Xem ngay
-                      </OutlineButton>
-                      <OutlineButton
-                        onClick={() => alert("oke")}
-                        className={"px-3 py-1 ms-5"}
-                      >
-                        <FaHeart></FaHeart>
-                      </OutlineButton>
+                      <div className="d-flex justify-content-between gap-4">
+                        <OutlineButton className="border-warning">
+                          Xem ngay
+                        </OutlineButton>
+                        <OutlineButton
+                          onClick={() => alert("oke")}
+                          className={"px-3 py-1"}
+                        >
+                          <FaHeart></FaHeart>
+                        </OutlineButton>
+                      </div>
                     </div>
-                  </Card.Text>
+                  </Card.ImgOverlay>
                 </Card.Body>
               </Card>
             </Link>

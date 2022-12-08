@@ -5,6 +5,10 @@ import {
   FaRegListAlt,
   FaRocketchat,
   FaUsers,
+  FaPlusCircle,
+  FaSearchPlus,
+  FaUserShield,
+  FaUserTimes,
 } from "react-icons/fa";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
@@ -34,6 +38,7 @@ function Room() {
   const [showAddMovie, setAddMovie] = useState(false);
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [active, setActive] = useState("");
 
   const [arrMovie, setArrMovie] = useState([]);
   const [player, setPlayer] = useState(null);
@@ -49,7 +54,7 @@ function Room() {
 
   const changeSearchDebouncer = useCallback(
     debounce((query) => {
-      if (query.trim().length >= 3) {
+      if (query.trim().length >= 1) {
         callApiSearchMovieLive(query);
       }
     }, 1000),
@@ -89,13 +94,19 @@ function Room() {
 
   const handleChangeVideo = (video) => {
     socket.current.emit("change-video", video);
-    // console.log(video);
+    setActive(video.id);
+    console.log(video);
   };
 
   const handleDeleteVideoInPlaylist = (video) => {
     socket.current.emit("delete-playlist", video);
   };
 
+  const handleKeypress = (e) => {
+    if (e.charCode === 13) {
+      handleSendMessage();
+    }
+  };
   // Call Api movie to add movies
 
   const callApiSearchMovieLive = async (key) => {
@@ -215,7 +226,7 @@ function Room() {
       <div className="container-fluid px-5 row ps-5">
         <Modal
           dialogClassName=" modal-add-movie"
-          className="px-0"
+          className="px-0 middle-create-room"
           show={showAddMovie}
           onHide={() => handleClose()}
         >
@@ -224,9 +235,9 @@ function Room() {
               <div className="">
                 <b>Thêm phim</b>
                 <input
-                  className="border border-danger ms-5"
+                  className="border border-warning ms-5 "
                   type="text"
-                  placeholder="Tìm phim với 3 ký tự..."
+                  placeholder="Tìm phim bộ..."
                   onChange={(e) => onChangeSearch(e.target.value)}
                 />
               </div>
@@ -236,7 +247,7 @@ function Room() {
             className="text-center tab-content"
             style={{ height: "50rem" }}
           >
-            {arrMovie.map((e) => (
+            {arrMovie.slice(0, 20).map((e) => (
               <div
                 key={e.id}
                 className="wrap-add-movie d-flex justify-content-between flex-row py-2"
@@ -251,33 +262,25 @@ function Room() {
                   ></img>
                 </div>
                 <span className="text-dark fs-4">
-                  {e.Movie.name} Tập: {e.episode}
+                  <b>{e.Movie.name}</b> ~{" "}
+                  <b className="text-secondary">Tập: {e.episode}</b>
                 </span>
                 <OutlineButton
-                  className="bg-dark"
+                  className="bg-dark border-0 px-4 py-1"
+                  disabled={true}
                   onClick={() => handleAddPlaylist(e)}
                 >
-                  Thêm
+                  <FaPlusCircle></FaPlusCircle>
                 </OutlineButton>
               </div>
             ))}
           </Modal.Body>
-          <Modal.Footer className="justify-content-center">
-            {/* <OutlineButton className="bg-dark" onClick={() => handleClose()}>
-              Không
-            </OutlineButton> */}
-            {/* <OutlineButton className="bg-danger">Đăng xuất</OutlineButton> */}
-          </Modal.Footer>
+          <Modal.Footer className="justify-content-center"></Modal.Footer>
         </Modal>
         <div className="wrap-view col-12 col-lg-8 wrap-player d-flex flex-column justify-content-center">
           <div className="section px-2 py-2" id="watch">
             {currentVideo ? (
               <JWPlayer
-                // id={currentPosition}
-                // onTime={(e) => {
-                //   setCurrentPosition(e);
-                //   console.log(e.position)
-                // }}
                 didMountCallback={(e) => {
                   setPlayer(e.player);
                 }}
@@ -308,23 +311,37 @@ function Room() {
             >
               <div className="wrap-playlist">
                 <Button
-                  className="shadow-none bg-warning px-1 py-1"
+                  title="Thêm phim"
+                  className="shadow-none bg-warning-create-room px-4 py-2"
                   type="button"
                   onClick={() => handleShow()}
                 >
-                  Thêm Phim
+                  <b>
+                    <FaSearchPlus className="text-light fs-2"></FaSearchPlus>
+                  </b>
                 </Button>
+                <hr className="my-3" />
                 {playlist.map((e, i) => (
-                  <div key={i} className="d-flex justify-content-between">
+                  <div
+                    key={i}
+                    className={`d-flex justify-content-end ${
+                      active == e.id ? "active" : ""
+                    }`}
+                  >
+                    <div className={`${active == e.id ? "d-flex" : "d-none"}`}>
+                      &#9889; &nbsp;
+                    </div>
                     <a
                       className="playlist-title"
                       onClick={() => handleChangeVideo(e)}
                     >
-                      {e.movie} Tập: {e.episode}
+                      <b>{e.movie}</b> ~{" "}
+                      <b className="text-secondary">Tập: {e.episode}</b>
                     </a>
                     <a onClick={() => handleDeleteVideoInPlaylist(e)}>
                       <FaTrashAlt></FaTrashAlt>
                     </a>
+                    <hr />
                   </div>
                 ))}
               </div>
@@ -342,16 +359,25 @@ function Room() {
                       currentUser.id == e.user.id
                         ? "chat-current-user "
                         : "chat-other-user "
-                    }px-2 py-1 my-1 rounded text-break`}
+                    }px-2 py-1 my-1 rounded content-user text-break bg-gray`}
                   >
                     <div>
                       <img src={e.user.avatar} alt={e.user.username} />
                       &nbsp;
                       {currentUser.username == e.user.username
-                        ? "You"
-                        : e.user.username}
+                        ? "Bạn"
+                        : e.user.username}{" "}
+                      &nbsp;
                     </div>
-                    <p className="bg-dark my-0 px-2">{e.message}</p>
+                    <p
+                      className={`my-0 px-2 ${
+                        currentUser.id == e.user.id
+                          ? "me-5 ms-0 "
+                          : "ms-5 me-0 "
+                      }`}
+                    >
+                      {e.message}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -363,10 +389,11 @@ function Room() {
                   onChange={(e) => {
                     setMessageText(e.target.value);
                   }}
+                  onKeyPress={(e) => handleKeypress(e)}
                 />
                 <button
                   className="border-0 btn-send"
-                  type="button"
+                  type="submit"
                   onClick={() => {
                     handleSendMessage();
                   }}
@@ -382,16 +409,25 @@ function Room() {
             >
               <div className="wrap-playlist d-flex align-items-center flex-column">
                 {viewers.map((e, i) => (
-                  <div
-                    key={i}
-                    className="wrap-user-view w-100 d-flex flex-row align-items-center"
-                  >
-                    <img src={e.avatar} alt="user" />
-                    <div className="d-flex justify-content-between w-100 px-2">
-                      <span className="playlist-title">
-                        {e.username} {currentUser.id == e.id && "You"}
-                      </span>
+                  <div className="w-75">
+                    <div
+                      key={i}
+                      className="wrap-user-view w-100 d-flex flex-row align-items-center"
+                    >
+                      <img src={e.avatar} alt="user" />
+                      <div className="d-flex justify-content-between w-100 px-2">
+                        <span className="playlist-title">
+                          {e.username}
+                          {currentUser.id == e.id && " (Bạn)"}
+                        </span>
+                        {currentUser.id == e.id ? (
+                          <FaUserShield className="fs-1 text-info"></FaUserShield>
+                        ) : (
+                          <FaUserTimes className="fs-1 text-light"></FaUserTimes>
+                        )}
+                      </div>
                     </div>
+                    <hr className="my-3 mx-0" />
                   </div>
                 ))}
               </div>
