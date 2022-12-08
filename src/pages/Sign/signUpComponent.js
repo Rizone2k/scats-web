@@ -8,7 +8,7 @@ import Alert from "react-bootstrap/Alert";
 
 import "./sign.scss";
 const SignUpForm = (title) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(null);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [response, setResponse] = useState("");
@@ -22,8 +22,13 @@ const SignUpForm = (title) => {
         password: password,
       };
       dispatch(register(user))
-        .then()
         .then(unwrapResult)
+        .then(() => {
+          setResponse(true);
+          setShow(true);
+          setUserName("");
+          setPassword("");
+        })
         .catch((err) => {
           console.log(err);
           setResponse(false);
@@ -35,7 +40,21 @@ const SignUpForm = (title) => {
   return title.title == "Sign Up" ? (
     <>
       <h3 className=" title-weight pb-3">{title.title}</h3>
-      {response == false && (
+      {response == true ? (
+        <Alert
+          className="position-absolute"
+          style={{ top: "110px", right: "10px" }}
+          variant="success"
+          show={show}
+          // onClose={}
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          <Alert.Heading className="px-2 my-1">
+            Tạo tài khoản thành công!
+          </Alert.Heading>
+        </Alert>
+      ) : (
         <Alert
           className="position-absolute"
           style={{ top: "80px", right: "10px" }}
@@ -54,6 +73,7 @@ const SignUpForm = (title) => {
         <div className="form-group">
           <label>User name</label>
           <input
+            value={userName}
             onChange={(e) => setUserName(e.target.value)}
             type="text"
             autoComplete="off"
@@ -65,6 +85,7 @@ const SignUpForm = (title) => {
         <div className="form-group">
           <label>Password</label>
           <input
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             autoComplete="off"
@@ -99,7 +120,7 @@ const SignUpForm = (title) => {
     </>
   ) : (
     <>
-      <h2> Ohhh....Something error!</h2>
+      <h2> Ohhh shit....Something error!</h2>
     </>
   );
 };
