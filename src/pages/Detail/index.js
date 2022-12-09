@@ -1,8 +1,9 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import ReactTimeAgo from "react-time-ago";
 import React, { useState, useCallback, useEffect } from "react";
 import { UnmountClosed } from "react-collapse";
 import JWPlayer from "@jwplayer/jwplayer-react";
-import { currentUserSelector } from "~/redux/selectors";
+import { currentUserSelector, isLoggedInSelector } from "~/redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { sendComment, sendReply } from "~/redux/reducers/comment";
 import commentsSlice from "~/redux/reducers/comment";
@@ -16,6 +17,7 @@ import {
   FaThumbsUp,
   FaRegEye,
   FaRegStar,
+  FaReply,
 } from "react-icons/fa";
 
 import Button, {
@@ -31,9 +33,14 @@ function Detail() {
   let { id } = useParams();
   const dispatch = useDispatch();
   const currentUser = useSelector(currentUserSelector);
+  const isLogIn = useSelector(isLoggedInSelector);
+  const navigate = useNavigate();
 
-  const comment = useSelector(commentsSelector);
-  console.log(comment);
+  const [active, setActive] = useState("");
+  const [count, setCount] = useState(0);
+  console.log(count);
+  // const comment = useSelector(commentsSelector);
+  // console.log(comment);
   // const [openReplyInput, setOpenReplyInput] = useState(null);
 
   const [commentText, setCommentText] = useState(""); /* text input to send*/
@@ -60,45 +67,67 @@ function Detail() {
     }
   };
 
-  // const handleSendComment = () => {
-  //   console.log(idRepliesComment, textRepliesComment);
-  // };
-
   // Send comments
   const handleSendComment = async () => {
+    // handleCanComment()
     console.log(commentText + "/" + currentUser.id + "/" + idComment);
-    if (commentText.trim().length > 0) {
-      dispatch(
-        sendComment({
-          content: commentText.trim(),
-          idUser: currentUser.id,
-          idComment,
-        })
-      ).catch((err) => {
-        console.log(err);
-      });
-      setCommentText("");
+    if (isLogIn) {
+      if (idComment == id) {
+        try {
+          if (commentText.length > 0) {
+            const data = {
+              content: commentText.trim(),
+              idUser: currentUser.id,
+              idMovie: idComment,
+            };
+            const res = await scatsApi.sendComment(data);
+            if (res.status == 200) {
+              const result = res.data;
+              if (result.status == "success") {
+                setCommentText("");
+              }
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (idComment != id) {
+        SendReply();
+      }
     } else {
-      console.log("Vui lòng nhập bình luận");
+      navigate("/profile");
     }
   };
   // Send comments reply
-  const SendReply = () => {
-    if (replyText.length > 0) {
-      dispatch(
-        sendReply({
-          content: replyText.trim(),
+  const SendReply = async () => {
+    console.log(commentText + "/" + currentUser.id + "/" + idComment);
+    try {
+      if (commentText.length > 0) {
+        const data = {
+          content: commentText.trim(),
           idUser: currentUser.id,
           idCmt: idComment,
-        })
-      ).catch((err) => {
-        console.log(err);
-      });
-      setReplyText("");
-    } else {
-      console.log("Vui lòng nhập bình luận");
+        };
+        const res = await scatsApi.sendCommentReply(data);
+        if (res.status == 200) {
+          const result = res.data;
+          if (result.status == "success") {
+            setCommentText("");
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (count >= 2) {
+      setIdComment(id);
+      setActive("");
+      setCount(0);
+    }
+  }, [count]);
 
   useEffect(() => {
     // similar cheat-code
@@ -134,16 +163,17 @@ function Detail() {
     // Get comments
     const getComment = async () => {
       try {
-        const response = await scatsApi.getComment(id);
+        const page = 1;
+        const response = await scatsApi.getComment(id, page);
         setCountComments(response.data.data.count);
         setComments(response.data.data.comments);
-        window.scrollTo(0, 0);
+        console.log("waiting");
       } catch (error) {
         console.log(error);
       }
     };
     getComment();
-  }, [id]);
+  }, [commentText, id]);
 
   return (
     <>
@@ -287,36 +317,55 @@ function Detail() {
                             &nbsp;
                             <small>{e.User.username}</small>
                           </div>
-                          <div className="chat-other-user rounded content-user align-items-end mx-1 px-2 text-break d-flex flex-column">
-                            <p>{e.content}</p>
+                          <div
+                            className={`chat-other-user rounded content-user align-items-start mx-1 px-2 text-break d-flex flex-column ${
+                              active == e.id ? "active bg-secondary " : ""
+                            }`}
+                          >
+                            <p className="ms-5 mt-2">{e.content}</p>
                             <div className="d-flex align-self-end flex-column">
                               <div className="time text-end">
-                                <small>{e.created_at}</small>
+                                {/* <div>
+                                  Last seen:{" "}
+                                  <ReactTimeAgo
+                                    date={e.created_at}
+                                    locale="en-US"
+                                  />
+                                </div> */}
+                                <small>
+                                  <ReactTimeAgo
+                                    date={e.created_at}
+                                    locale="en-US"
+                                  />
+                                </small>
+                                {/* <small>{e.created_at}</small> */}
                                 <br />
-                                {e.Replies.length ? (
+                                {e.Replies.length > 0 && (
                                   <>
                                     <a
                                       className="ps-5"
                                       onClick={() => setOpenReply(!openReply)}
                                     >
-                                      Xem phản hồi
+                                      {openReply == true
+                                        ? "Ẩn phản hồi"
+                                        : " Xem phản hồi"}
                                     </a>
                                     &nbsp; &nbsp;
-                                    <a
-                                      className="pe-5"
-                                      onClick={() => setIdComment(e.id)}
-                                    >
-                                      Bình luận
-                                    </a>
                                   </>
-                                ) : (
-                                  <a
-                                    className="pe-5"
-                                    onClick={() => setIdComment(e.id)}
-                                  >
-                                    Bình luận
-                                  </a>
                                 )}
+                                <a
+                                  title="Phản hồi"
+                                  className={`pe-5 ${
+                                    active == e.id ? "active text-warning " : ""
+                                  }`}
+                                  onClick={() => {
+                                    count == 0 && setActive(e.id);
+                                    setIdComment(e.id);
+                                    setCount(count + 1);
+                                  }}
+                                >
+                                  <FaReply></FaReply>
+                                </a>
                               </div>
                               <div>
                                 <UnmountClosed isOpened={openReply}>
@@ -324,7 +373,12 @@ function Detail() {
                                     <React.Fragment key={i}>
                                       <p className="bg-black">{e.content}</p>
                                       <div className="d-flex justify-content-end">
-                                        <span>{e.created_at}</span>
+                                        <small>
+                                          <ReactTimeAgo
+                                            date={e.created_at}
+                                            locale="en-US"
+                                          />
+                                        </small>
                                       </div>
                                     </React.Fragment>
                                   ))}
@@ -343,6 +397,7 @@ function Detail() {
                       className="input-chat w-100"
                       type="text"
                       value={commentText}
+                      autoFocus={count == 1 && true}
                     />
                     <button
                       title="Send"
@@ -357,7 +412,10 @@ function Detail() {
                       className="border-0 input-wrap_icon"
                       type="button"
                     >
-                      <FaRegGrinTongueSquint className="text-info"></FaRegGrinTongueSquint>
+                      <FaRegGrinTongueSquint
+                        style={{ color: "#cd4200" }}
+                        className="fs-2"
+                      ></FaRegGrinTongueSquint>
                     </button>
                   </div>
                 </div>
@@ -381,7 +439,10 @@ function Detail() {
                           className="popular-movies"
                         >
                           <>
-                            <div className="items-movie">
+                            <div
+                              className="items-movie"
+                              onClick={() => setIdComment(item.id)}
+                            >
                               <Link to={"/detail/" + item.id}>
                                 <Card>
                                   <Card.Img

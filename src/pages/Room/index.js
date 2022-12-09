@@ -9,6 +9,7 @@ import {
   FaSearchPlus,
   FaUserShield,
   FaUserTimes,
+  FaRegGrinTongueSquint,
 } from "react-icons/fa";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
@@ -399,6 +400,16 @@ function Room() {
                   }}
                 >
                   <FaRegPaperPlane></FaRegPaperPlane>
+                </button>
+                <button
+                  title="Icon"
+                  className="border-0 input-wrap_icon"
+                  type="button"
+                >
+                  <FaRegGrinTongueSquint
+                    style={{ color: "#cd4200" }}
+                    className="fs-2"
+                  ></FaRegGrinTongueSquint>
                 </button>
               </div>
             </Tab>
