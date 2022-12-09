@@ -42,9 +42,9 @@
   &__poster {
     flex: 1;
 
-    // @include mobile {
-    //   display: none;
-    // }
+    @include mobile {
+      display: none;
+    }
 
     &__img {
       background-position: center;
@@ -176,7 +176,24 @@
     bottom: 9px;
   }
 }
-// .scat ul,
-// li {
-//   list-style-type: disc !important;
-// }
+.wrap-episode {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100vh - 300px);
+  &_item {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 5px;
+      padding: 2px;
+    }
+    & a:hover {
+      color: rgb(197, 153, 7) !important;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgb(211, 210, 210);
+    }
+  }
+}

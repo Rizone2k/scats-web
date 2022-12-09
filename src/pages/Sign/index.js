@@ -18,7 +18,6 @@ export default function index() {
   const isLogin = useSelector(isLoggedInSelector);
   const currentUser = useSelector(currentUserSelector);
   // const [Info, setInfo] = useState({});
-  // const [show, setShow] = useState(true);
   const [show, setShow] = useState(true);
   window.scrollTo(0, 0);
 
