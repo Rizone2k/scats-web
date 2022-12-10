@@ -77,24 +77,28 @@ const HeroSlideItem = (props) => {
       >
         <div className="hero-slide__item__content container-fluid">
           <div className="hero-slide__item__content__info">
-            <h2 className="title text-light">{item.name}</h2>
-            <div
+            <h3 className="title text-light overview">{item.name}</h3>
+            <small
               className="overview"
               dangerouslySetInnerHTML={{ __html: item.content }}
-            ></div>
+            ></small>
             <div className="btns">
-              <span className="review-action">
-                <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>{" "}
-                {item.liked + Math.floor(Math.random() * 140) + 40}
-              </span>
-              <span className="ps-4 review-action">
-                <FaRegEye className="text-primary mb-1"></FaRegEye>{" "}
-                {item.viewed + Math.floor(Math.random() * 280) + 40}
-              </span>
-              <span className="ps-4 review-action">
-                <FaRegStar className="text-warning mb-2"></FaRegStar>{" "}
-                {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
-              </span>
+              <div className="d-flex flex-wrap justify-content-center">
+                <span className="review-action">
+                  <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>{" "}
+                  {item.liked + Math.floor(Math.random() * 140) + 40}
+                </span>
+                &nbsp; &nbsp;
+                <span className="review-action">
+                  <FaRegEye className="text-primary mb-1"></FaRegEye>{" "}
+                  {item.viewed + Math.floor(Math.random() * 280) + 40}
+                </span>
+                &nbsp; &nbsp;
+                <span className="review-action">
+                  <FaRegStar className="text-warning mb-2"></FaRegStar>{" "}
+                  {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
+                </span>
+              </div>
               <br /> <br />
               <OutlineButton className="border-warning">Xem ngay</OutlineButton>
             </div>

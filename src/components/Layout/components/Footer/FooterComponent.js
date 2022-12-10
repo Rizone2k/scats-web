@@ -6,14 +6,14 @@ function Footer() {
         <div className="container">
           <div className="cta d-block d-md-flex align-items-center px-5">
             <div>
-              <h2 className="mb-0 pb-0">
+              <h3 className="mb-0 pb-0">
                 Bạn đã sẵn sàng trở thành đối tác của Scats?
-              </h2>
+              </h3>
               <h4>Hãy liên hệ ngay với chúng tôi!</h4>
             </div>
             <div className="ms-auto">
               <a href="#" className="btn btn-dark shadow-none py-3 px-5">
-                <h5>Liên hệ ngay</h5>
+                <h4>Liên hệ ngay</h4>
               </a>
             </div>
           </div>

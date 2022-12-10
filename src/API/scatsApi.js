@@ -21,8 +21,16 @@ const scatsApi = {
     const url = "room";
     return instance.post(url, data);
   },
-  getComment: (id) => {
-    const url = "comment/" + id;
+  sendComment: (data) => {
+    const url = "comment";
+    return instance.post(url, data);
+  },
+  sendCommentReply: (data) => {
+    const url = "comment/reply";
+    return instance.post(url, data);
+  },
+  getComment: (id, page) => {
+    const url = "comment/" + id + "?page=" + page;
     return instance.get(url);
   },
   getLibrary: (userID) => {

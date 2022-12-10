@@ -9,6 +9,7 @@ import {
   FaSearchPlus,
   FaUserShield,
   FaUserTimes,
+  FaRegGrinTongueSquint,
 } from "react-icons/fa";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
@@ -232,10 +233,10 @@ function Room() {
         >
           <Modal.Header className="text-center" closeButton>
             <Modal.Title>
-              <div className="">
-                <b>Thêm phim</b>
+              <div>
+                <b>Thêm phim</b>&nbsp;
                 <input
-                  className="border border-warning ms-5 "
+                  className="border border-warning px-1 px-lg-3 py-2 w-100"
                   type="text"
                   placeholder="Tìm phim bộ..."
                   onChange={(e) => onChangeSearch(e.target.value)}
@@ -261,12 +262,12 @@ function Room() {
                     alert=""
                   ></img>
                 </div>
-                <span className="text-dark fs-4">
+                <small className="text-dark fs-4">
                   <b>{e.Movie.name}</b> ~{" "}
                   <b className="text-secondary">Tập: {e.episode}</b>
-                </span>
+                </small>
                 <OutlineButton
-                  className="bg-dark border-0 px-4 py-1"
+                  className="bg-dark border-0 px-3 py-1"
                   disabled={true}
                   onClick={() => handleAddPlaylist(e)}
                 >
@@ -335,8 +336,10 @@ function Room() {
                       className="playlist-title"
                       onClick={() => handleChangeVideo(e)}
                     >
-                      <b>{e.movie}</b> ~{" "}
-                      <b className="text-secondary">Tập: {e.episode}</b>
+                      <small>
+                        <b>{e.movie}</b> ~{" "}
+                        <b className="text-secondary">Tập: {e.episode}</b>
+                      </small>
                     </a>
                     <a onClick={() => handleDeleteVideoInPlaylist(e)}>
                       <FaTrashAlt></FaTrashAlt>
@@ -399,6 +402,16 @@ function Room() {
                   }}
                 >
                   <FaRegPaperPlane></FaRegPaperPlane>
+                </button>
+                <button
+                  title="Icon"
+                  className="border-0 input-wrap_icon"
+                  type="button"
+                >
+                  <FaRegGrinTongueSquint
+                    style={{ color: "#cd4200" }}
+                    className="fs-2"
+                  ></FaRegGrinTongueSquint>
                 </button>
               </div>
             </Tab>

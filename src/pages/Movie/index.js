@@ -44,7 +44,7 @@ function Movie() {
       <div className="container px-3 pb-4">
         <Filter setItems={setItems} />
       </div>
-      <div className="list-movie container-fluid px-3 py-2">
+      <div className="list-movie container-fluid px-3 py-2 row">
         {items.map((item, i) => (
           <React.Fragment key={i}>
             {

@@ -71,7 +71,9 @@ const SignUpForm = (title) => {
       )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>User name</label>
+          <label>
+            <small>User name</small>
+          </label>
           <input
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
@@ -83,7 +85,9 @@ const SignUpForm = (title) => {
         </div>
 
         <div className="form-group">
-          <label>Password</label>
+          <label>
+            <small>Password</small>
+          </label>
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -103,7 +107,7 @@ const SignUpForm = (title) => {
             />
             &nbsp;
             <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
+              <small> Remember me</small>
             </label>
           </div>
         </div>
@@ -113,9 +117,11 @@ const SignUpForm = (title) => {
             Sign Up
           </OutlineButton>
         </div>
-        <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
-        </p>
+        <div className="forgot-password text-right">
+          <small>
+            Quên <a href="#">mật khẩu?</a>
+          </small>
+        </div>
       </form>
     </>
   ) : (

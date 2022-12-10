@@ -49,7 +49,6 @@ a {
 
 body {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.6rem;
   line-height: 1.5;
   text-rendering: optimizeSpeed;
 }
@@ -61,4 +60,12 @@ h4,
 h5,
 h6 {
   font-family: "Montserrat", sans-serif;
+}
+
+h3 {
+  font-size: calc(1.3rem + 0.6vw) !important;
+}
+.h4,
+h4 {
+  font-size: calc(1.275rem + 0.3vw);
 }

@@ -56,9 +56,9 @@
         font-weight: 700;
         line-height: 1;
 
-        // @include tablet {
-        //   font-size: 4rem;
-        // }
+        @include tablet {
+          font-size: 4rem;
+        }
       }
 
       .overview {
@@ -82,23 +82,23 @@
     &__poster {
       // flex: 1;
       // @include flex(center, flex-start);
+
       display: flex;
       justify-content: flex-start;
       align-items: center;
       position: relative;
 
       img {
-        width: 200px;
+        width: 85% !important;
         border-radius: 7px;
         box-shadow: $box-shadow;
-
         transform: scale(0);
         transition: transform 0.7s ease;
       }
 
-      // @include tablet {
-      //   display: none;
-      // }
+      @include tablet {
+        display: none;
+      }
     }
   }
 

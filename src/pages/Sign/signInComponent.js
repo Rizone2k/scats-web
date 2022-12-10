@@ -51,7 +51,9 @@ const SignInForm = (title) => {
       )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>User name</label>
+          <label>
+            <small>User name</small>
+          </label>
           <input
             onChange={(e) => setUserName(e.target.value)}
             type="text"
@@ -62,7 +64,9 @@ const SignInForm = (title) => {
         </div>
 
         <div className="form-group">
-          <label>Password</label>
+          <label>
+            <small>Password</small>
+          </label>
           <input
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -81,18 +85,20 @@ const SignInForm = (title) => {
             />
             &nbsp;
             <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
+              <small> Remember me</small>
             </label>
           </div>
         </div>
 
         <div className="text-center">
           <OutlineButton type="submit" className="bg-dark w-50 text-light">
-            Sign in
+            Sign In
           </OutlineButton>
         </div>
         <div className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+          <small>
+            Quên <a href="#">mật khẩu?</a>
+          </small>
         </div>
       </form>
     </>
