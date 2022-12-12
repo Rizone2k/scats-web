@@ -76,14 +76,14 @@ const Filter = ({ setItems }) => {
           {itemsCountry.map((i, e) => (
             <React.Fragment key={e}>
               <NavDropdown.Item className="fs-4 text">
-                <small
+                <strong
                   onClick={() => {
                     setCountry(i.id);
                     setTitleCountry(i.name);
                   }}
                 >
                   <small onClick={() => SetCheck(true)}>{i.name}</small>
-                </small>
+                </strong>
               </NavDropdown.Item>
               <NavDropdown.Divider />
             </React.Fragment>
@@ -101,7 +101,7 @@ const Filter = ({ setItems }) => {
                     setTitleYear(i.name);
                   }}
                 >
-                  <p onClick={() => SetCheck(true)}>{i.name}</p>
+                  <small onClick={() => SetCheck(true)}>{i.name}</small>
                 </strong>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -120,7 +120,7 @@ const Filter = ({ setItems }) => {
                     setTitleGenre(i.name);
                   }}
                 >
-                  <p onClick={() => SetCheck(true)}>{i.name}</p>
+                  <small onClick={() => SetCheck(true)}>{i.name}</small>
                 </strong>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -139,7 +139,7 @@ const Filter = ({ setItems }) => {
                     setTitleType(i.name);
                   }}
                 >
-                  <p onClick={() => SetCheck(true)}>{i.name}</p>
+                  <small onClick={() => SetCheck(true)}>{i.name}</small>
                 </strong>
               </NavDropdown.Item>
               <NavDropdown.Divider />

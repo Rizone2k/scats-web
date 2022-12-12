@@ -45,7 +45,6 @@ const BackToTop = () => {
           </svg>
         </button>
       )}
-      {/* &#8679; is used to create the upward arrow */}
     </>
   );
 };

@@ -60,7 +60,6 @@ const Search = () => {
                 <hr className=" py-0 my-1 border-dark" />
               </li>
             ))}
-          {/* <Items /> */}
         </ul>
       </div>
     </div>

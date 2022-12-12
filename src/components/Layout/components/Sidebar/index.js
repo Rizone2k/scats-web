@@ -68,7 +68,7 @@ const Sidebar = () => {
   };
   return (
     <>
-      <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
+      <div style={{ width: isOpen ? "180px" : "50px" }} className="sidebar">
         <div className="top_section">
           <h1
             style={{ display: isOpen ? "block" : "none" }}
@@ -87,7 +87,9 @@ const Sidebar = () => {
               style={{ display: isOpen ? "block" : "none" }}
               className="link_text"
             >
-              {item.name}
+              <b>
+                <small> {item.name}</small>
+              </b>
             </div>
           </NavLink>
         ))}
@@ -104,7 +106,9 @@ const Sidebar = () => {
               style={{ display: isOpen ? "block" : "none" }}
               className="link_text"
             >
-              Profile
+              <b>
+                <small> Log out</small>
+              </b>
             </div>
           </button>
         )}
@@ -116,7 +120,7 @@ const Sidebar = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <span className="text-dark fs-4">Mày muốn đăng xuất?</span>
+          <span className="text-dark fs-4">Are you sure about that?</span>
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
           <OutlineButton className="bg-dark" onClick={handleClose}>

@@ -34,6 +34,8 @@ const SignUpForm = (title) => {
           setResponse(false);
           setShow(true);
         });
+    } else {
+      alert("Tài khoản hoặc mật khẩu không được để trống!");
     }
   };
 
@@ -51,7 +53,7 @@ const SignUpForm = (title) => {
           dismissible
         >
           <Alert.Heading className="px-2 my-1">
-            Tạo tài khoản thành công!
+            <small>Tạo tài khoản thành công!</small>
           </Alert.Heading>
         </Alert>
       ) : (
@@ -65,7 +67,7 @@ const SignUpForm = (title) => {
           dismissible
         >
           <Alert.Heading className="px-2 my-1">
-            Tài khoản đã tồn tại!
+            <small> Tài khoản đã tồn tại!</small>
           </Alert.Heading>
         </Alert>
       )}

@@ -46,7 +46,6 @@ export default function index() {
           style={{ top: "80px", right: "10px" }}
           variant="success"
           show={show}
-          // onClose={}
           onClose={() => setShow(false)}
           dismissible
         >
@@ -55,7 +54,7 @@ export default function index() {
           </Alert.Heading>
         </Alert>
       )}
-      {/* {console.log(Cookies)} */}
+
       {isLogin ? (
         <>
           <section className="h-100 gradient-custom-2 bg-profile">

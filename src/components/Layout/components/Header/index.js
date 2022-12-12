@@ -10,8 +10,6 @@ import React, { useState, useEffect } from "react";
 import { FaBell, FaClock, FaLanguage } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import "./Header.scss";
-// import Tippy from "@tippyjs/react";
-// import "tippy.js/dist/tippy.css";
 
 function Header() {
   let time = new Date().toLocaleString();

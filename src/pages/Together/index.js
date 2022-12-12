@@ -10,9 +10,6 @@ import scatsApi from "../../API/scatsApi";
 import { FaVideo, FaRegNewspaper } from "react-icons/fa";
 import Input from "~/components/Layout/components/Input/Input";
 
-// import Button, {
-//   OutlineButton,
-// } from "~/components/Layout/components/Button/Button";
 import "./together.scss";
 import TogetherComponent from "./togetherComponent";
 
@@ -54,7 +51,7 @@ function Together() {
         const result = res.data;
         if (result.status == "success") {
           setHasRoom(result.data);
-          console.log(result.data.private);
+          // console.log(result.data.private);
         }
       }
     } catch (error) {

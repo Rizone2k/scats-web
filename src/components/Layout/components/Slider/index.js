@@ -21,7 +21,6 @@ export default function Slider() {
       try {
         const response = await scatsApi.getBanner();
         setSlideItems(response.data);
-        // console.log(response.data);
       } catch {
         console.log("error");
       }
@@ -73,15 +72,14 @@ const HeroSlideItem = (props) => {
         style={{
           backgroundImage: `url("https://image.tmdb.org/t/p/original//90ZZIoWQLLEXSVm0ik3eEQBinul.jpg")`,
         }}
-        // style={{ backgroundImage: `url(${item.background})` }}
       >
         <div className="hero-slide__item__content container-fluid">
           <div className="hero-slide__item__content__info">
-            <h3 className="title text-light overview">{item.name}</h3>
-            <small
+            <h3 className="title text-light overview fs-1">{item.name}</h3>
+            <a
               className="overview"
               dangerouslySetInnerHTML={{ __html: item.content }}
-            ></small>
+            ></a>
             <div className="btns">
               <div className="d-flex flex-wrap justify-content-center">
                 <span className="review-action">

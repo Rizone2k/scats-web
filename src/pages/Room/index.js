@@ -96,7 +96,7 @@ function Room() {
   const handleChangeVideo = (video) => {
     socket.current.emit("change-video", video);
     setActive(video.id);
-    console.log(video);
+    // console.log(video);
   };
 
   const handleDeleteVideoInPlaylist = (video) => {

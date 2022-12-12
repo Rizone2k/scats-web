@@ -1,13 +1,11 @@
 import { useNavigate, useParams } from "react-router";
 import ReactTimeAgo from "react-time-ago";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { UnmountClosed } from "react-collapse";
 import JWPlayer from "@jwplayer/jwplayer-react";
 import { currentUserSelector, isLoggedInSelector } from "~/redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { sendComment, sendReply } from "~/redux/reducers/comment";
-import commentsSlice from "~/redux/reducers/comment";
-import { commentsSelector } from "~/redux/selectors";
 
 import {
   FaRegPaperPlane,
@@ -38,10 +36,6 @@ function Detail() {
 
   const [active, setActive] = useState("");
   const [count, setCount] = useState(0);
-  // console.log(count);
-  // const comment = useSelector(commentsSelector);
-  // console.log(comment);
-  // const [openReplyInput, setOpenReplyInput] = useState(null);
 
   const [commentText, setCommentText] = useState(""); /* text input to send*/
   const [replyText, setReplyText] = useState(""); /* text input to send reply*/
@@ -59,13 +53,10 @@ function Detail() {
   const [episode, setEpisode] = useState(1);
 
   const [player, setPlayer] = useState(null);
-  // const [active, setActive] = useState(false);
   let URL = video[video.length - 1];
   // console.log(URL);
   // console.log(video);
   let middleURL;
-
-  // const [middleURL, setMiddleURL] = useState();
 
   // send comments 1.Content 2.Id_User 3.Id_Movie
   // send comments reply 1.Content 2.Id_User 3.Id_Cmt_Reply
@@ -110,7 +101,8 @@ function Detail() {
         setCount(0);
       }
     } else {
-      navigate("/profile");
+      alert("Vui lòng đăng nhập để bình luận!");
+      setTimeout(navigate("/profile"), 5000);
     }
   };
   // Send comments reply
@@ -139,7 +131,7 @@ function Detail() {
   };
 
   const handleChangeVideo = () => {
-    console.log(middleURL);
+    // console.log(middleURL);
 
     try {
       // console.log(URL.hls);
@@ -199,17 +191,12 @@ function Detail() {
         const response = await scatsApi.getComment(id, page);
         setCountComments(response.data.data.count);
         setComments(response.data.data.comments);
-        // console.log("waiting");
       } catch (error) {
         console.log(error);
       }
     };
     getComment();
   }, [commentText, id]);
-
-  // console.log(comments);
-  console.log(id);
-  console.log(idComment);
 
   return (
     <>
@@ -315,12 +302,10 @@ function Detail() {
                               <a
                                 key={i}
                                 onClick={() => {
-                                  // setVideo(e.hls);
                                   middleURL = e.hls;
                                   setMiddle(true);
                                   setEpisode(e.episode);
                                   handleChangeVideo();
-                                  console.log(e.hls);
                                 }}
                                 className="px-3 py-3 rounded border border-warning mx-1 my-1"
                               >
@@ -380,20 +365,12 @@ function Detail() {
                             </small>
                             <div className="d-flex align-self-end flex-column w-100">
                               <div className="time text-end">
-                                {/* <div>
-                                  Last seen:{" "}
-                                  <ReactTimeAgo
-                                    date={e.created_at}
-                                    locale="en-US"
-                                  />
-                                </div> */}
                                 <small className="d-flex justify-content-start">
                                   <ReactTimeAgo
                                     date={Date.parse(e.created_at)}
                                     locale="en-US"
                                   />
                                 </small>
-                                {/* <small>{e.created_at}</small> */}
 
                                 {e.Replies.length > 0 && (
                                   <>
@@ -460,7 +437,6 @@ function Detail() {
                   <div className="input-wrap position-relative flex-row justify-content-center align-items-end pt-2">
                     <input
                       onChange={(e) => setCommentText(e.target.value)}
-                      // onChange={(e) => setTextIdRepliesComment(e.target.value)}
                       onKeyPress={(e) => handleKeypress(e)}
                       className="input-chat w-100"
                       type="text"
@@ -487,7 +463,6 @@ function Detail() {
                     </button>
                   </div>
                 </div>
-                {/*  */}
               </div>
             </div>
             <div className="section mb-3">
@@ -516,7 +491,6 @@ function Detail() {
                                 console.log(middleURL);
                                 handleChangeVideo();
                                 window.scrollTo(0, 0);
-                                // middleURL = item.hls;
                               }}
                             >
                               <Link to={"/detail/" + item.id}>

@@ -28,6 +28,8 @@ const SignInForm = (title) => {
           setError(err);
           setShow(true);
         });
+    } else {
+      alert("Tài khoản hoặc mật khẩu không được để trống!");
     }
   };
 

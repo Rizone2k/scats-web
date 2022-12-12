@@ -7,13 +7,19 @@ function Footer() {
           <div className="cta d-block d-md-flex align-items-center px-5">
             <div>
               <h3 className="mb-0 pb-0">
-                Bạn đã sẵn sàng trở thành đối tác của Scats?
+                <small>Bạn đã sẵn sàng trở thành đối tác của Scats?</small>
               </h3>
-              <h4>Hãy liên hệ ngay với chúng tôi!</h4>
+              <h4>
+                <small>Hãy liên hệ ngay với chúng tôi!</small>
+              </h4>
             </div>
             <div className="ms-auto">
               <a href="#" className="btn btn-dark shadow-none py-3 px-5">
-                <h4>Liên hệ ngay</h4>
+                <h4>
+                  <b>
+                    <small>Liên hệ ngay</small>
+                  </b>
+                </h4>
               </a>
             </div>
           </div>

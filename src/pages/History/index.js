@@ -14,7 +14,6 @@ function History() {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
   const currentUser = { id: 1 };
-  // const currentUser = useSelector(currentUserSelector);
 
   useEffect(() => {
     // similar cheat-code
