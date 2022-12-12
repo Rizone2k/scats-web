@@ -6,7 +6,7 @@ Clone it via the command line "git clone https://github.com/Rizone2k/scats-web.g
 
 ## 🌐Preview
 # Scats_0
-![image](https://drive.google.com/file/d/1ldwO5Gb_6izfkntqg4TNIrK4T9WpRiUA/view?usp=share_link/to/img.png)
+![image](https://lh3.googleusercontent.com/u/1/drive-viewer/AFDK6gMf5Hup25Ou-01_wAo5G1_HngLqILiLrNQmczAmBHDjlw7cJ--gq53HTd4yz9iO3PFGXmNSo6iCMJ9B9NnOfoNSisUd=w1600-h789)
 
 # Scats_1
 ![image](https://drive.google.com/file/d/1yUi444RKGcoPwhYnEzzHTB27JLUB4aTS/view?usp=share_link/to/img.png)
