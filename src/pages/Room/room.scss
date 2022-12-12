@@ -84,11 +84,21 @@ li {
     display: flex;
     flex-direction: row-reverse;
   }
+  p {
+    padding: 0.7rem 0.7rem;
+    background-color: rgb(139, 106, 68);
+    border-radius: 10px 5px 10px 5px;
+  }
 }
 
 .chat-other-user {
   align-self: flex-start;
   align-items: center;
+  p {
+    padding: 0.7rem 0.7rem;
+    background-color: rgb(139, 106, 68);
+    border-radius: 5px 10px 5px 10px;
+  }
 }
 .modal-add-movie {
   margin-left: auto;

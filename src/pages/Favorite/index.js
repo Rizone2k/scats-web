@@ -104,21 +104,23 @@ function Favorite() {
                                       ) - 0.7}
                                     </span>
                                     <br /> <br />
-                                    <OutlineButton
-                                      title={"Xem luôn"}
-                                      className="border-warning"
-                                    >
-                                      Xem ngay
-                                    </OutlineButton>
-                                    <OutlineButton
-                                      title={"Bỏ thích"}
-                                      onClick={() => alert("oke")}
-                                      className={
-                                        "px-3 py-1 ms-5 bg-danger text-dark"
-                                      }
-                                    >
-                                      <FaHeartBroken></FaHeartBroken>
-                                    </OutlineButton>
+                                    <div className="d-flex justify-content-between gap-4">
+                                      <OutlineButton
+                                        title={"Xem luôn"}
+                                        className="border-warning"
+                                      >
+                                        Xem ngay
+                                      </OutlineButton>
+                                      <OutlineButton
+                                        title={"Bỏ thích"}
+                                        onClick={() => alert("oke")}
+                                        className={
+                                          "px-3 py-1 bg-danger text-dark"
+                                        }
+                                      >
+                                        <FaHeartBroken></FaHeartBroken>
+                                      </OutlineButton>
+                                    </div>
                                   </div>
                                 </Card.ImgOverlay>
                               </Card.Body>

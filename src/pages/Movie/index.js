@@ -44,7 +44,7 @@ function Movie() {
       <div className="container px-3 pb-4">
         <Filter setItems={setItems} />
       </div>
-      <div className="list-movie container-fluid px-3 py-2 row">
+      <div className="list-movie container-fluid px-3 py-2">
         {items.map((item, i) => (
           <React.Fragment key={i}>
             {
@@ -98,15 +98,17 @@ function Movie() {
                                 {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
                               </span>
                               <br /> <br />
-                              <OutlineButton className="border-warning">
-                                Xem ngay
-                              </OutlineButton>
-                              <OutlineButton
-                                onClick={() => alert("oke")}
-                                className={"px-3 py-1 ms-5"}
-                              >
-                                <FaHeart></FaHeart>
-                              </OutlineButton>
+                              <div className="d-flex justify-content-between gap-4">
+                                <OutlineButton className="border-warning">
+                                  Xem ngay
+                                </OutlineButton>
+                                <OutlineButton
+                                  onClick={() => alert("oke")}
+                                  className={"px-3 py-1"}
+                                >
+                                  <FaHeart></FaHeart>
+                                </OutlineButton>
+                              </div>
                             </div>
                           </Card.ImgOverlay>
                         </Card.Body>

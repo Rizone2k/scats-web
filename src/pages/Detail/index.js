@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import ReactTimeAgo from "react-time-ago";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { UnmountClosed } from "react-collapse";
 import JWPlayer from "@jwplayer/jwplayer-react";
 import { currentUserSelector, isLoggedInSelector } from "~/redux/selectors";
@@ -38,7 +38,7 @@ function Detail() {
 
   const [active, setActive] = useState("");
   const [count, setCount] = useState(0);
-  console.log(count);
+  // console.log(count);
   // const comment = useSelector(commentsSelector);
   // console.log(comment);
   // const [openReplyInput, setOpenReplyInput] = useState(null);
@@ -46,6 +46,7 @@ function Detail() {
   const [commentText, setCommentText] = useState(""); /* text input to send*/
   const [replyText, setReplyText] = useState(""); /* text input to send reply*/
   const [idComment, setIdComment] = useState(id); /* id to send cmt*/
+  const [idCommentReply, setIdCommentReply] = useState(id); /* id to send cmt*/
 
   const [items, setItems] = useState([]);
   const [comments, setComments] = useState([]); /* Get cmt*/
@@ -54,8 +55,17 @@ function Detail() {
   const [item, setItem] = useState(null);
   const [video, setVideo] = useState("");
   const [countComment, setCountComments] = useState([]);
+  const [middle, setMiddle] = useState(false);
+  const [episode, setEpisode] = useState(1);
 
+  const [player, setPlayer] = useState(null);
+  // const [active, setActive] = useState(false);
   let URL = video[video.length - 1];
+  // console.log(URL);
+  // console.log(video);
+  let middleURL;
+
+  // const [middleURL, setMiddleURL] = useState();
 
   // send comments 1.Content 2.Id_User 3.Id_Movie
   // send comments reply 1.Content 2.Id_User 3.Id_Cmt_Reply
@@ -70,7 +80,7 @@ function Detail() {
   // Send comments
   const handleSendComment = async () => {
     // handleCanComment()
-    console.log(commentText + "/" + currentUser.id + "/" + idComment);
+    // console.log(commentText + "/" + currentUser.id + "/" + idComment);
     if (isLogIn) {
       if (idComment == id) {
         try {
@@ -85,6 +95,9 @@ function Detail() {
               const result = res.data;
               if (result.status == "success") {
                 setCommentText("");
+                setActive("");
+                setIdComment(id);
+                console.log("handleSendComment");
               }
             }
           }
@@ -92,7 +105,9 @@ function Detail() {
           console.log(error);
         }
       } else if (idComment != id) {
+        console.log("SendReply");
         SendReply();
+        setCount(0);
       }
     } else {
       navigate("/profile");
@@ -100,7 +115,7 @@ function Detail() {
   };
   // Send comments reply
   const SendReply = async () => {
-    console.log(commentText + "/" + currentUser.id + "/" + idComment);
+    // console.log(commentText + "/" + currentUser.id + "/" + idComment);
     try {
       if (commentText.length > 0) {
         const data = {
@@ -113,9 +128,26 @@ function Detail() {
           const result = res.data;
           if (result.status == "success") {
             setCommentText("");
+            setActive("");
+            setIdComment(id);
           }
         }
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChangeVideo = () => {
+    console.log(middleURL);
+
+    try {
+      // console.log(URL.hls);
+      player.setup({
+        file: middleURL,
+        type: "hls",
+      });
+      player.play();
     } catch (error) {
       console.log(error);
     }
@@ -136,7 +168,7 @@ function Detail() {
         let response = null;
         const params = {};
         response = await scatsApi.getMoviesList(3, { params });
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         setItems(response.data.movies);
       } catch (error) {
         console.log(error);
@@ -154,8 +186,8 @@ function Detail() {
         console.log(error);
       }
     };
-    getDetail();
 
+    getDetail();
     getList();
   }, [id]);
 
@@ -167,13 +199,17 @@ function Detail() {
         const response = await scatsApi.getComment(id, page);
         setCountComments(response.data.data.count);
         setComments(response.data.data.comments);
-        console.log("waiting");
+        // console.log("waiting");
       } catch (error) {
         console.log(error);
       }
     };
     getComment();
   }, [commentText, id]);
+
+  // console.log(comments);
+  console.log(id);
+  console.log(idComment);
 
   return (
     <>
@@ -231,15 +267,24 @@ function Detail() {
                 <div>
                   <span>
                     <FaThumbsUp className="text-danger mb-1"></FaThumbsUp>{" "}
-                    {item.liked + Math.floor(Math.random() * 140) + 40}
+                    <small>
+                      {" "}
+                      {item.liked + Math.floor(Math.random() * 140) + 40}
+                    </small>
                   </span>
                   <span className="ps-4">
                     <FaRegEye className="text-primary mb-1"></FaRegEye>{" "}
-                    {item.viewed + Math.floor(Math.random() * 280) + 40}
+                    <small>
+                      {" "}
+                      {item.viewed + Math.floor(Math.random() * 280) + 40}
+                    </small>
                   </span>
                   <span className="ps-4">
                     <FaRegStar className="text-warning mb-2"></FaRegStar>{" "}
-                    {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
+                    <small>
+                      {" "}
+                      {Math.floor(Math.random() * (10 - 4) + 4) - 0.7}
+                    </small>
                   </span>
                 </div>
               </div>
@@ -269,10 +314,13 @@ function Detail() {
                             item.Episodes.slice(0, 19).map((e, i) => (
                               <a
                                 key={i}
-                                onClick={function handleURL() {
-                                  {
-                                    setVideo(e.hls);
-                                  }
+                                onClick={() => {
+                                  // setVideo(e.hls);
+                                  middleURL = e.hls;
+                                  setMiddle(true);
+                                  setEpisode(e.episode);
+                                  handleChangeVideo();
+                                  console.log(e.hls);
                                 }}
                                 className="px-3 py-3 rounded border border-warning mx-1 my-1"
                               >
@@ -290,7 +338,10 @@ function Detail() {
           <div className="container px-3 py-3">
             <h3 className="fw-bolder">
               #Xem phim: {item.name} ~
-              <span className="text-warning"> Tập {URL.episode}</span>
+              <span className="text-warning">
+                {" "}
+                Tập {middle == false ? URL.episode : episode}
+              </span>
             </h3>
 
             <div className="wrap-player-video row">
@@ -300,12 +351,14 @@ function Detail() {
               >
                 <JWPlayer
                   file={URL.hls}
+                  didMountCallback={(e) => {
+                    setPlayer(e.player);
+                  }}
                   type="hls"
                   library="http://api.scats.tk/public/js/JWPlayer.js"
                 />
               </div>
               <div className="col-12 col-lg-3 col-md-3 wrap-player-video_cmt px-1 py-1 rounded">
-                {/*  */}
                 <h4 className="ps-2">Bình luận: {"(" + countComment + ")"}</h4>
                 <div className="bg-black px-1 py-1 rounded">
                   <div className="wrap-player-video_content-cmt d-flex flex-column ">
@@ -336,7 +389,7 @@ function Detail() {
                                 </div> */}
                                 <small className="d-flex justify-content-start">
                                   <ReactTimeAgo
-                                    date={e.created_at}
+                                    date={Date.parse(e.created_at)}
                                     locale="en-US"
                                   />
                                 </small>
@@ -345,19 +398,25 @@ function Detail() {
                                 {e.Replies.length > 0 && (
                                   <>
                                     <a
-                                      className="ps-5"
-                                      onClick={() => setOpenReply(!openReply)}
+                                      onClick={() => {
+                                        setOpenReply(!openReply);
+                                        setIdComment(e.id);
+                                        setIdCommentReply(e.comment_id);
+                                      }}
                                     >
-                                      {openReply == true
-                                        ? "Ẩn phản hồi"
-                                        : " Xem phản hồi"}
+                                      {idComment == e.id &&
+                                      openReply == true ? (
+                                        <small>Ẩn phản hồi</small>
+                                      ) : (
+                                        <small> Xem phản hồi</small>
+                                      )}
                                     </a>
                                     &nbsp; &nbsp;
                                   </>
                                 )}
                                 <a
                                   title="Phản hồi"
-                                  className={`pe-5 ${
+                                  className={`pe-3 ${
                                     active == e.id ? "active text-warning " : ""
                                   }`}
                                   onClick={() => {
@@ -368,25 +427,30 @@ function Detail() {
                                 >
                                   <FaReply></FaReply>
                                 </a>
-                              </div>
-                              <div>
-                                <UnmountClosed isOpened={openReply}>
-                                  {e.Replies.map((e, i) => (
-                                    <React.Fragment key={i}>
-                                      <p className="bg-black">
-                                        <small>{e.content}</small>
-                                      </p>
-                                      <div className="d-flex justify-content-end">
-                                        <small>
-                                          <ReactTimeAgo
-                                            date={e.created_at}
-                                            locale="en-US"
-                                          />
-                                        </small>
-                                      </div>
-                                    </React.Fragment>
+                                <div>
+                                  {e.Replies.map((item, i) => (
+                                    <UnmountClosed
+                                      key={i}
+                                      isOpened={idComment == e.id && openReply}
+                                    >
+                                      {
+                                        <React.Fragment>
+                                          <p className="bg-black wrap-episode_item_content">
+                                            <small>{item.content}</small>
+                                          </p>
+                                          <div className="d-flex justify-content-end">
+                                            <small>
+                                              <ReactTimeAgo
+                                                date={item.created_at}
+                                                locale="en-US"
+                                              />
+                                            </small>
+                                          </div>
+                                        </React.Fragment>
+                                      }
+                                    </UnmountClosed>
                                   ))}
-                                </UnmountClosed>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -445,7 +509,15 @@ function Detail() {
                           <>
                             <div
                               className="items-movie"
-                              onClick={() => setIdComment(item.id)}
+                              onClick={() => {
+                                setIdComment(item.id);
+                                id = item.id;
+                                middleURL = URL.hls;
+                                console.log(middleURL);
+                                handleChangeVideo();
+                                window.scrollTo(0, 0);
+                                // middleURL = item.hls;
+                              }}
                             >
                               <Link to={"/detail/" + item.id}>
                                 <Card>
@@ -494,15 +566,17 @@ function Detail() {
                                           ) - 0.7}
                                         </span>
                                         <br /> <br />
-                                        <OutlineButton className="border-warning">
-                                          Xem ngay
-                                        </OutlineButton>
-                                        <OutlineButton
-                                          onClick={() => alert("oke")}
-                                          className={"px-3 py-1 ms-5"}
-                                        >
-                                          <FaHeart></FaHeart>
-                                        </OutlineButton>
+                                        <div className="d-flex justify-content-between gap-4">
+                                          <OutlineButton className=" border-warning">
+                                            Xem ngay
+                                          </OutlineButton>
+                                          <OutlineButton
+                                            onClick={() => alert("oke")}
+                                            className={"px-3 py-1"}
+                                          >
+                                            <FaHeart></FaHeart>
+                                          </OutlineButton>
+                                        </div>
                                       </div>
                                     </Card.ImgOverlay>
                                   </Card.Body>

@@ -422,11 +422,8 @@ function Room() {
             >
               <div className="wrap-playlist d-flex align-items-center flex-column">
                 {viewers.map((e, i) => (
-                  <div className="w-75">
-                    <div
-                      key={i}
-                      className="wrap-user-view w-100 d-flex flex-row align-items-center"
-                    >
+                  <div key={i} className="w-75">
+                    <div className="wrap-user-view w-100 d-flex flex-row align-items-center">
                       <img src={e.avatar} alt="user" />
                       <div className="d-flex justify-content-between w-100 px-2">
                         <span className="playlist-title">
