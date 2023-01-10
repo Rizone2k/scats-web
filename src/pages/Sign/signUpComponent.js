@@ -16,7 +16,7 @@ const SignUpForm = (title) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userName.length > 0 && password.length > 0) {
+    if (userName.length > 2 && password.length > 2) {
       const user = {
         username: userName,
         password: password,
@@ -35,7 +35,9 @@ const SignUpForm = (title) => {
           setShow(true);
         });
     } else {
-      alert("Tài khoản hoặc mật khẩu không được để trống!");
+      alert(
+        "Tài khoản hoặc mật khẩu không được để trống và nhiều hơn 2 ký tự!"
+      );
     }
   };
 

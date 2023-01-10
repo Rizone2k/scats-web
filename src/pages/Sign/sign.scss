@@ -17,6 +17,19 @@
     font-weight: 700;
   }
 }
+.edit-profile {
+  .modal-content {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .text-start {
+    font-weight: 600;
+  }
+  input {
+    font-weight: 600;
+    color: black;
+  }
+}
 
 .tabSign.active {
   background: #f54083;

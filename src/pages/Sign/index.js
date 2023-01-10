@@ -4,19 +4,26 @@ import { FaInfo, FaRegStar } from "react-icons/fa";
 
 import scatsApi, { categoryParam } from "~/API/scatsApi";
 import Alert from "react-bootstrap/Alert";
-import { info } from "~/redux/reducers/auth";
+import { info, updateInfo } from "~/redux/reducers/auth";
 import { OutlineButton } from "~/components/Layout/components/Button/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { isLoggedInSelector, currentUserSelector } from "~/redux/selectors";
 import SignIn from "./signInComponent";
 import SignUp from "./signUpComponent";
 import "./sign.scss";
+import { Modal } from "react-bootstrap";
 
 export default function index() {
+  const dispatch = useDispatch();
   const [itemsGenre, setItemsGenre] = useState([]);
   const [title, setTitle] = useState("Sign In");
   const isLogin = useSelector(isLoggedInSelector);
   const currentUser = useSelector(currentUserSelector);
+  const [userName, setUserName] = useState(currentUser.username || "");
+  const [email, setEmail] = useState(currentUser.email || "");
+  const [avatarSelect, setAvatarSelect] = useState(currentUser.avatar);
+  const [showEdit, setShowEdit] = useState(false);
   // const [Info, setInfo] = useState({});
   const [show, setShow] = useState(true);
   window.scrollTo(0, 0);
@@ -32,15 +39,32 @@ export default function index() {
     fil();
   }, []);
 
-  const handleSubmit = () => {
+  // Handle edit profile
+  const handleEditProfile = () => {
     // e.preventDefault();
-    console.log("roi");
-    // alert("Sended!");
+    if (userName.length > 2 && email.length > 2) {
+      const user = {
+        id: currentUser.id,
+        username: userName,
+        email: email,
+        avatar: avatarSelect,
+      };
+      dispatch(updateInfo(user))
+        .then(unwrapResult)
+        .then(alert("Successfully update!"))
+        .catch((err) => {
+          console.log(err);
+          // setResponse(false);
+          setShow(true);
+        });
+    } else {
+      alert("Unsuccess!");
+    }
   };
 
   return (
     <>
-      {isLogin == true && (
+      {/* {isLogin == true && (
         <Alert
           className="position-absolute"
           style={{ top: "80px", right: "10px" }}
@@ -53,7 +77,7 @@ export default function index() {
             <small>Đăng nhập thành công!</small>
           </Alert.Heading>
         </Alert>
-      )}
+      )} */}
 
       {isLogin ? (
         <>
@@ -81,7 +105,7 @@ export default function index() {
                           className="btn btn-outline-dark bg-dark cursor-none"
                           data-mdb-ripple-color="dark"
                           style={{ zIndex: "1" }}
-                          onClick={() => handleSubmit()}
+                          onClick={() => setShowEdit(true)}
                         >
                           Chỉnh sửa
                         </OutlineButton>
@@ -156,6 +180,86 @@ export default function index() {
                     </div>
                   </div>
                 </div>
+              </div>
+              {/* Edit profile */}
+              <div>
+                <form
+                  className={`${showEdit ? "d-block zIndex-9" : "d-none"}`}
+                  onSubmit={handleEditProfile}
+                >
+                  <Modal
+                    dialogClassName="modal-add-movie w-100 text-center edit-profile"
+                    className="px-0 "
+                    show={showEdit}
+                    onHide={() => setShowEdit(false)}
+                  >
+                    <Modal.Header className="text-center" closeButton>
+                      <Modal.Title>
+                        <b>Chỉnh sửa thông tin</b>
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body
+                      className="text-center tab-content w-50 align-self-center"
+                      style={{ height: "50rem" }}
+                    >
+                      <div className="">
+                        <img
+                          src={currentUser.avatar}
+                          alt="Ảnh đại diện"
+                          className="mt-4 mb-2 rounded-circle"
+                          style={{ width: "150px", zIndex: "1" }}
+                        />
+                      </div>
+                      <div className="text-start">
+                        <label>
+                          <small>User name</small>
+                        </label>
+                        <input
+                          onChange={(e) => setUserName(e.target.value)}
+                          type="text"
+                          // autoComplete="off"
+                          className="border border-dark rounded w-100"
+                          placeholder="Enter user name"
+                          defaultValue={currentUser.username}
+                        />
+                      </div>
+                      {/* <div className="text-start">
+                        <label>
+                          <small>Avatar</small>
+                          <input
+                            type="file"
+                            name="myImage"
+                            accept="image/png, image/gif, image/jpeg"
+                          />
+                        </label>
+                      </div> */}
+                      <div className="text-start">
+                        <label>
+                          <small>Email</small>
+                        </label>
+                        <input
+                          onChange={(e) => setEmail(e.target.value)}
+                          type="email"
+                          // autoComplete="off"
+                          className="border border-dark rounded w-100"
+                          placeholder="Enter password"
+                          defaultValue={currentUser.email}
+                        />
+                      </div>
+                      <div className="text-center pt-5">
+                        <OutlineButton
+                          title="Thay đổi"
+                          type="submit"
+                          className="bg-danger w-50 text-light"
+                          onClick={handleEditProfile}
+                        >
+                          Change
+                        </OutlineButton>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-center"></Modal.Footer>
+                  </Modal>
+                </form>
               </div>
             </div>
           </section>

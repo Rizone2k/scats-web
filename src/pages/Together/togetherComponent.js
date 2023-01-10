@@ -10,7 +10,7 @@ import { useCallback } from "react";
 function TogetherComponent({ isLogin }) {
   const [roomLive, setRoomLive] = useState([]);
   const [resultRoomLive, setResultRoomLive] = useState([]);
-  // console.log(resultRoomLive);
+  // console.log(roomLive);
   const listRoom = roomLive;
 
   useEffect(() => {
@@ -67,6 +67,7 @@ function TogetherComponent({ isLogin }) {
       <div className="list-room container rounded py-2">
         <div className="py-3 d-flex flex-wrap wrap-room">
           {listRoom.map((item) => (
+            /* Handle private room at here */
             <Link key={item.id} to={`/room/${item.slug}/${item.id}`}>
               <span className="px-3 py-3 rounded border border-warning mx-1 my-1">
                 {item.name}

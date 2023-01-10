@@ -147,6 +147,7 @@ export const updateInfo = createAsyncThunk(
       formData.append("email", email);
       const res = await instance.post(`/user/update`, formData);
       if (res.status == 200) {
+        console.log(res);
         if (res.data.status == "success") {
           return res.data.data;
         } else {

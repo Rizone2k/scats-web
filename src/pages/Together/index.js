@@ -51,7 +51,6 @@ function Together() {
         const result = res.data;
         if (result.status == "success") {
           setHasRoom(result.data);
-          // console.log(result.data.private);
         }
       }
     } catch (error) {

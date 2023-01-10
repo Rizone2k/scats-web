@@ -21,7 +21,9 @@ function Home() {
         </div>
         <div className="pe-4">
           <Link to={"/movies"}>
-            <OutlineButton className="out-line">Xem Thêm</OutlineButton>
+            <OutlineButton title="Xem thêm" className="out-line">
+              Xem Thêm
+            </OutlineButton>
           </Link>
         </div>
       </div>

@@ -24,7 +24,7 @@ function History() {
         response = await scatsApi.getLibrary(currentUser.id);
         window.scrollTo(0, 0);
         setItems(response.data.Libraries);
-        console.log(response.data.Libraries);
+        // console.log(response.data.Libraries);
       } catch (error) {
         console.log(error);
       }

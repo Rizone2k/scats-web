@@ -29,7 +29,11 @@ function Header() {
         >
           <Container fluid className="ps-5">
             <NavLink to="/" className="logo ps-5 ms-5">
-              Scats
+              <img
+                width={100}
+                src={require("../../../../assets/img/logo.png")}
+                alt="logo"
+              />
             </NavLink>
             <Navbar.Toggle
               aria-controls={`offcanvasNavbar-expand-${expand}`}
@@ -45,7 +49,11 @@ function Header() {
                   className="logo"
                   id={`offcanvasNavbarLabel-expand-${expand}`}
                 >
-                  <b>Scats</b>
+                  <img
+                    width={100}
+                    src={require("../../../../assets/img/logo.png")}
+                    alt="logo"
+                  />
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

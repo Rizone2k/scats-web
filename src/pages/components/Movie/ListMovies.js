@@ -101,12 +101,16 @@ function ListMovies(page) {
                       </span>
                       <br /> <br />
                       <div className="d-flex justify-content-between gap-4">
-                        <OutlineButton className="border-warning">
+                        <OutlineButton
+                          className="border-warning"
+                          title={"Xem ngay"}
+                        >
                           Xem ngay
                         </OutlineButton>
                         <OutlineButton
                           onClick={() => alert("oke")}
                           className={"px-3 py-1"}
+                          title={"Yêu thích"}
                         >
                           <FaHeart></FaHeart>
                         </OutlineButton>

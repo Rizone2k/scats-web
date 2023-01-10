@@ -99,12 +99,16 @@ function Movie() {
                               </span>
                               <br /> <br />
                               <div className="d-flex justify-content-between gap-4">
-                                <OutlineButton className="border-warning">
+                                <OutlineButton
+                                  title="Xem ngay"
+                                  className="border-warning"
+                                >
                                   Xem ngay
                                 </OutlineButton>
                                 <OutlineButton
                                   onClick={() => alert("oke")}
                                   className={"px-3 py-1"}
+                                  title={"Yêu thích"}
                                 >
                                   <FaHeart></FaHeart>
                                 </OutlineButton>
@@ -122,7 +126,7 @@ function Movie() {
         ))}
       </div>
       <div className="list-movie__loadmore">
-        <OutlineButton className="small" onClick={loadMore}>
+        <OutlineButton title={"Tải thêm"} className="small" onClick={loadMore}>
           Load more
         </OutlineButton>
       </div>

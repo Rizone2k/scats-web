@@ -11,7 +11,7 @@ const SignInForm = (title) => {
   const [show, setShow] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -25,7 +25,7 @@ const SignInForm = (title) => {
         .then(unwrapResult)
         .catch((err) => {
           console.log(err);
-          setError(err);
+          setError(true);
           setShow(true);
         });
     } else {
@@ -36,7 +36,7 @@ const SignInForm = (title) => {
   return title.title == "Sign In" ? (
     <>
       <h3 className=" title-weight pb-3">{title.title}</h3>
-      {error == "Not found" && (
+      {error == true && (
         <Alert
           className="position-absolute"
           style={{ top: "80px", right: "10px" }}

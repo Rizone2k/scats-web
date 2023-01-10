@@ -26,7 +26,11 @@ function Footer() {
           <div className="row">
             <div className="col-sm">
               <a href="#" className="footer-logo logo">
-                Scats
+                <img
+                  width={100}
+                  src={require("../../../../assets/img/logo.png")}
+                  alt="logo"
+                />
               </a>
               <p className="copyright">
                 <small>&copy; 2022</small>
